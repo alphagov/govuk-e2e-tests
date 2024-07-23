@@ -13,20 +13,21 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dear
 
 RUN apt-get install -y --no-install-recommends nodejs npm;\
     echo -n node version:\ ; node -v; \
-    echo -n npm version:\ ; npm -v;
+    echo -n npm version:\ ; npm -v; \
+    npm install -g yarn@1.22.19
 
 RUN ln -fs /tmp $APP_HOME
 RUN groupadd -g 1001 app; \
     useradd -u 1001 -g app app --home $APP_HOME
 
 WORKDIR $APP_HOME
-COPY package.json package-lock.json ./
-RUN npm install
-RUN PLAYWRIGHT_BROWSERS_PATH=$APP_HOME/.cache/ms-playwright npx playwright install --with-deps chromium && \
+COPY package.json yarn.lock ./
+RUN  yarn install --immutable
+RUN PLAYWRIGHT_BROWSERS_PATH=$APP_HOME/.cache/ms-playwright yarn playwright install --with-deps chromium && \
     rm -r /var/lib/apt/lists /var/cache/apt/archives
 
 COPY playwright.config.js ./
 COPY tests/ ./tests/
 COPY lib/ ./lib/
 USER app
-CMD [ "npx", "playwright", "test", "--reporter=dot" ]
+CMD [ "yarn", "playwright", "test", "--reporter=dot" ]

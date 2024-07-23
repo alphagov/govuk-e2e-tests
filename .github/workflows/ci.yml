@@ -16,13 +16,11 @@ jobs:
         with:
           show-progress: false
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
+      - name: Setup Node
+        uses: alphagov/govuk-infrastructure/.github/actions/setup-node@main
 
       - name: Run eslint
-        run: npx eslint .
+        run: yarn run eslint .
 
       - name: Run prettier
-        run: npx prettier --check .
+        run: yarn run prettier --check .
