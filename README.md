@@ -11,8 +11,8 @@ Clone and navigate to the root folder.
 Install the dependencies:
 
 ```bash
-npm install
-npx playwright install --with-deps chromium
+yarn install
+yarn playwright install --with-deps chromium
 ```
 
 ### Set environment variables
@@ -33,5 +33,5 @@ Replace placeholders with appropriate values.
 ### Run
 
 ```bash
-npm playwright test
+yarn playwright test
 ```
