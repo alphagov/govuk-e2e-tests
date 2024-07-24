@@ -31,4 +31,4 @@ COPY lib/ ./lib/
 RUN chown -R app:app $APP_HOME
 
 USER app
-CMD [ "yarn", "playwright", "test", "--reporter=dot" ]
+CMD [ "yarn", "playwright", "test", "--reporter=list" ]
