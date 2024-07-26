@@ -69,6 +69,13 @@ export default defineConfig({
       },
       grep: /@worksonmirror/,
     },
+    {
+      name: "cloudfront",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+      grepInvert: /@notcloudfront|@publishing-app/,
+    },
     /*
     {
       name: 'firefox',
