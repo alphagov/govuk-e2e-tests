@@ -1,8 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 
-test.describe("Smart Answers", () => {
-  test("Check the app is routable for a Smart Answer", { tag: ["@app-smartanswers"] }, async ({ page }) => {
+test.describe("Smart Answers", { tag: ["@app-smartanswers"] }, () => {
+  test("Check the app is routable for a Smart Answer", async ({ page }) => {
     await page.goto("/vat-payment-deadlines");
     await expect(page.getByRole("heading", { name: /VAT payment deadline/i })).toBeVisible();
     await page.getByRole("button", { name: "Start now" }).click();
@@ -16,7 +16,7 @@ test.describe("Smart Answers", () => {
     await expect(page.getByRole("heading", { name: /Information based on your answers/i })).toBeVisible();
   });
 
-  test("Check the frontend can talk to Worldwide API", { tag: ["@app-smartanswers"] }, async ({ page }) => {
+  test("Check the frontend can talk to Worldwide API", async ({ page }) => {
     await page.goto("/check-uk-visa");
     await page.getByRole("button", { name: "Start now" }).click();
     await page

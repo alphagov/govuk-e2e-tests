@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 
-test.describe("Content Store", () => {
+test.describe("Content Store", { tag: ["@app-content-store"] }, () => {
   test("Check the app is routable", async ({ request }) => {
     const response = await request.get("/api/content/help");
     expect(response.status()).toBe(200);

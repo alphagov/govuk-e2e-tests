@@ -2,15 +2,15 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl } from "../lib/utils";
 
-test.describe("Content Data", () => {
+test.describe("Content Data", { tag: ["@app-content-data"] }, () => {
   test.use({ baseURL: publishingAppUrl("content-data") });
 
-  test("Can log in to Content Data", { tag: ["@app-content-data-admin"] }, async ({ page }) => {
+  test("Can log in to Content Data", { tag: ["@publishing-app"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page.getByText("Content Data")).toBeVisible();
   });
 
-  test("Check admin can talk to Content Data API", async ({ page }) => {
+  test("Check admin can talk to Content Data API", { tag: ["@publishing-app"] }, async ({ page }) => {
     await page.goto("/");
     await page.getByLabel("Search for a title or URL").fill("Government Digital Service");
     await page.getByRole("button", { name: "Filter" }).click();

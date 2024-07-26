@@ -1,13 +1,13 @@
 import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 
-test.describe("Frontend", () => {
-  test("Check homepage loads", async ({ page }) => {
+test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
+  test("Check homepage loads", { tags: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Welcome to GOV.UK/);
   });
 
-  test("Check help page loads", async ({ page }) => {
+  test("Check help page loads", { tags: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/help");
     await expect(page.locator("body")).toContainText("Help using GOV.UK");
   });
@@ -25,10 +25,14 @@ test.describe("Frontend", () => {
     await expect(page.locator("body")).toContainText("Busking licence");
   });
 
-  test("Check the frontend can talk to Asset Manager with media path", async ({ page }) => {
-    await page.goto("/media/5a7b9f8ced915d4147621960/passport-impact-indicat.csv/preview");
-    await expect(page.locator("body")).toContainText("Passport impact indicators - CSV version");
-  });
+  test(
+    "Check the frontend can talk to Asset Manager with media path",
+    { tags: ["@worksonmirror"] },
+    async ({ page }) => {
+      await page.goto("/media/5a7b9f8ced915d4147621960/passport-impact-indicat.csv/preview");
+      await expect(page.locator("body")).toContainText("Passport impact indicators - CSV version");
+    }
+  );
 
   test("Check find your local council", async ({ page }) => {
     await page.goto("/find-local-council");
@@ -65,7 +69,7 @@ test.describe("Frontend", () => {
     await expect(page.locator("body")).toContainText("Holborn Library");
   });
 
-  test("Check the travel advice index page loads", async ({ page }) => {
+  test("Check the travel advice index page loads", { tags: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/foreign-travel-advice");
     await expect(page.locator("body")).toContainText("Foreign travel advice");
     await expect(page.locator("body")).toContainText("Afghanistan");

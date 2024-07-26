@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 
 test.describe("CDN", () => {
-  test("Check all A/B test variants work", { tag: ["@cdn", "@notcloudfront"] }, async ({ page }) => {
+  test("Check all A/B test variants work", { tag: ["@notcloudfront"] }, async ({ page }) => {
     await page.goto("/help/ab-testing");
     await page.getByRole("button", { name: "Accept additional cookies" }).click();
 
@@ -19,7 +19,7 @@ test.describe("CDN", () => {
     expect(results).toContain("B");
   });
 
-  test("Check an A/B test is persistent", { tag: ["@cdn", "@notcloudfront"] }, async ({ page }) => {
+  test("Check an A/B test is persistent", { tag: ["@notcloudfront"] }, async ({ page }) => {
     await page.goto("/help/ab-testing");
     await page.getByRole("button", { name: "Accept additional cookies" }).click();
     const variant = page.locator(".ab-example-group");
@@ -37,7 +37,7 @@ test.describe("CDN", () => {
     expect(new Set(results)).toEqual(new Set(assignedVariant));
   });
 
-  test("Check caching behaviour for POST requests", { tag: ["@cdn", "@notcloudfront"] }, async ({ page }) => {
+  test("Check caching behaviour for POST requests", { tag: ["@notcloudfront"] }, async ({ page }) => {
     const response = await page.request.post("/find-local-council", {
       form: { postcode: "E1 8QS" },
       maxRedirects: 0,
@@ -46,7 +46,7 @@ test.describe("CDN", () => {
     expect(response.status()).toBe(302);
   });
 
-  test("Check caching behaviour for GET requests", { tag: ["@cdn", "@notcloudfront"] }, async ({ page }) => {
+  test("Check caching behaviour for GET requests", { tag: ["@notcloudfront"] }, async ({ page }) => {
     const response = await page.request.get("/");
     expect(parseInt(response.headers()["x-cache-hits"])).toBeGreaterThan(0);
   });

@@ -2,10 +2,10 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl } from "../lib/utils";
 
-test.describe("Publisher", () => {
+test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
   test.use({ baseURL: publishingAppUrl("publisher") });
 
-  test("Can log in to Publisher", { tag: ["@app-publisher", "@app-publishing-api"] }, async ({ page }) => {
+  test("Can log in to Publisher", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page.getByText("Publisher")).toBeVisible();
     await expect(page.locator("#publication-list-container")).toBeVisible();
