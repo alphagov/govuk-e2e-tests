@@ -47,6 +47,7 @@ test.describe("CDN", () => {
   });
 
   test("Check caching behaviour for GET requests", { tag: ["@notcloudfront"] }, async ({ page }) => {
+    await page.request.get("/");
     const response = await page.request.get("/");
     expect(parseInt(response.headers()["x-cache-hits"])).toBeGreaterThan(0);
   });
