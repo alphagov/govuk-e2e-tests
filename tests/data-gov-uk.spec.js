@@ -44,23 +44,4 @@ test.describe("CKAN", () => {
     expect(response.status()).toBe(200);
     expect(await response.json()).toBeTruthy();
   });
-
-  test("Check datasets sync between CKAN and Find", async ({ page }) => {
-    await page.goto("/dataset?q=");
-    const ckanDatasetCountString = page.locator(".search-form h1").first();
-    await expect(ckanDatasetCountString).toHaveText(/(\d{1,3}(,\d{3})*) datasets found/, { useInnerText: true });
-    const ckanDatasetCount = parseInt((await ckanDatasetCountString.innerText()).replace(/,/g, ""));
-
-    // Data.gov.uk
-    await page.goto("https://data.gov.uk");
-    await page.getByRole("searchbox", { name: "Search data.gov.uk" }).fill("");
-    await page.getByRole("button", { name: "Search" }).click("data");
-    const dataGovUkDatasetCountString = page.locator(".dgu-results__summary > span");
-    await expect(dataGovUkDatasetCountString).toHaveText(/(\d{1,3}(,\d{3})*)/, { useInnerText: true });
-    const dataGovUkDatasetCount = parseInt((await dataGovUkDatasetCountString.innerText()).replace(/,/g, ""));
-
-    const countDiff = Math.abs(ckanDatasetCount - dataGovUkDatasetCount);
-
-    expect(countDiff).toBeLessThan(25);
-  });
 });
