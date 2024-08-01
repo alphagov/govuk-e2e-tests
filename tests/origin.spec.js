@@ -17,12 +17,12 @@ test.describe("Origin", () => {
     expect(response.status()).toBe(403);
   });
 
-  test("Check robots.txt loads", { tag: ["@worksonmirror"] }, async ({ page }) => {
+  test("Check robots.txt loads", async ({ page }) => {
     await page.goto("/robots.txt");
     await expect(page.getByText("User-agent:")).toBeVisible();
   });
 
-  test("Check redirects work", { tag: ["@worksonmirror"] }, async ({ page }) => {
+  test("Check redirects work", async ({ page }) => {
     await page.goto("/workplacepensions");
     await expect(page).toHaveURL("/workplace-pensions");
   });
