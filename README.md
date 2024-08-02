@@ -23,6 +23,7 @@ Create a `.env` file in the root of the project with the following content:
 cat <<EOF > .env
 PUBLISHING_DOMAIN=integration.publishing.service.gov.uk
 PUBLIC_DOMAIN=www.integration.publishing.service.gov.uk
+DGU_DOMAIN=www.integration.data.gov.uk
 SIGNON_EMAIL=<email>
 SIGNON_PASSWORD=<password>
 EOF

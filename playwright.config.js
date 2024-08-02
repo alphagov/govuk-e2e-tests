@@ -69,6 +69,13 @@ export default defineConfig({
       },
       grep: /@worksonmirror/,
     },
+    {
+      name: "dgu",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+      grep: /@app-dgu/,
+    },
     /*
     {
       name: "cloudfront",

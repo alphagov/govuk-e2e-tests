@@ -3,7 +3,7 @@ import { test } from "../lib/cachebust-test";
 import { publishingAppUrl } from "../lib/utils";
 
 test.describe("Data.gov.uk", { tag: ["@app-dgu"] }, () => {
-  test.use({ baseURL: "https://data.gov.uk/" });
+  test.use({ baseURL: `https://${process.env.DGU_DOMAIN}` });
 
   test("Check home page loads correctly", async ({ page }) => {
     await page.goto("/");
@@ -31,7 +31,7 @@ test.describe("Data.gov.uk", { tag: ["@app-dgu"] }, () => {
   });
 });
 
-test.describe("CKAN", () => {
+test.describe("CKAN", { tag: ["@app-dgu"] },() => {
   test.use({ baseURL: publishingAppUrl("ckan") });
 
   test("Check CKAN loads correctly", async ({ page }) => {
