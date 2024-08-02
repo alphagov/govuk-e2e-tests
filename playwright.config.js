@@ -69,6 +69,7 @@ export default defineConfig({
       },
       grep: /@worksonmirror/,
     },
+    /*
     {
       name: "cloudfront",
       use: {
@@ -76,7 +77,6 @@ export default defineConfig({
       },
       grepInvert: /@notcloudfront|@publishing-app/,
     },
-    /*
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
