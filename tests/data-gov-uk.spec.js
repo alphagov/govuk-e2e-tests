@@ -31,7 +31,7 @@ test.describe("Data.gov.uk", { tag: ["@app-dgu"] }, () => {
   });
 });
 
-test.describe("CKAN", { tag: ["@app-dgu"] },() => {
+test.describe("CKAN", { tag: ["@app-dgu"] }, () => {
   test.use({ baseURL: publishingAppUrl("ckan") });
 
   test("Check CKAN loads correctly", async ({ page }) => {

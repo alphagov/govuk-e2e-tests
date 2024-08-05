@@ -52,18 +52,26 @@ test.describe("CDN", () => {
     expect(parseInt(response.headers()["x-cache-hits"])).toBeGreaterThan(0);
   });
 
-  test("Check redirect from bare domain to www.gov.uk is working for HTTP", { tag: ["@production"] }, async ({ page }) => {
-    const response = await page.request.get("http://gov.uk", { maxRedirects: 0 });
-    expect(response.status()).toBe(301);
-    expect(response.headers()["location"]).toBe("https://gov.uk/");
-  });
+  test(
+    "Check redirect from bare domain to www.gov.uk is working for HTTP",
+    { tag: ["@production"] },
+    async ({ page }) => {
+      const response = await page.request.get("http://gov.uk", { maxRedirects: 0 });
+      expect(response.status()).toBe(301);
+      expect(response.headers()["location"]).toBe("https://gov.uk/");
+    }
+  );
 
-  test("Check redirect from bare domain to www.gov.uk is working for HTTPS and has HSTS enabled", { tag: ["@production"] }, async ({ page }) => {
-    const response = await page.request.get("https://gov.uk", { maxRedirects: 0 });
-    expect(response.status()).toBe(301);
-    expect(response.headers()["location"]).toBe("https://www.gov.uk/");
-    expect(response.headers()["strict-transport-security"]).toBe("max-age=63072000; preload");
-  });
+  test(
+    "Check redirect from bare domain to www.gov.uk is working for HTTPS and has HSTS enabled",
+    { tag: ["@production"] },
+    async ({ page }) => {
+      const response = await page.request.get("https://gov.uk", { maxRedirects: 0 });
+      expect(response.status()).toBe(301);
+      expect(response.headers()["location"]).toBe("https://www.gov.uk/");
+      expect(response.headers()["strict-transport-security"]).toBe("max-age=63072000; preload");
+    }
+  );
 
   test("Check www.gov.uk redirect from HTTP to HTTPS is working", { tag: ["@production"] }, async ({ page }) => {
     const response = await page.request.get("http://www.gov.uk", { maxRedirects: 0 });
