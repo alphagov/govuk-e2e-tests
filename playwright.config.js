@@ -30,9 +30,16 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      name: "www",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+      grep: /@domain-www/,
+    },
     { name: "setup", testMatch: /.*\.setup\.js/ },
     {
-      name: "chromium",
+      name: "publishing",
       use: {
         ...devices["Desktop Chrome"],
         storageState: "tmp/.auth/user.json",
