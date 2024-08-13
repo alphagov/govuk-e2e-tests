@@ -1,8 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 
-test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
-  test("homepage", { tags: ["@worksonmirror"] }, async ({ page }) => {
+test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
+  test("homepage", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Welcome to GOV.UK/);
     await expect(
@@ -10,7 +10,7 @@ test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
     ).toBeVisible();
   });
 
-  test("help page", { tags: ["@worksonmirror"] }, async ({ page }) => {
+  test("help page", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/help");
     await expect(page.getByRole("heading", { name: "Help using GOV.UK" })).toBeVisible();
   });
@@ -77,7 +77,7 @@ test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
     await expect(page.getByRole("button", { name: "Go to Dudley Metropolitan" })).toBeVisible();
   });
 
-  test("foreign travel advice index", { tags: ["@worksonmirror"] }, async ({ page }) => {
+  test("foreign travel advice index", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/foreign-travel-advice");
     await expect(page.getByRole("heading", { name: "Foreign travel advice" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Afghanistan" })).toBeVisible();
@@ -88,7 +88,7 @@ test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
     await expect(page.getByRole("link", { name: "Zimbabwe" })).toBeHidden();
   });
 
-  test("signin", { tags: ["@worksonmirror"] }, async ({ page }) => {
+  test("signin", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/sign-in");
     await expect(page.getByRole("heading", { name: "Sign in to a service" })).toBeVisible();
   });
@@ -136,12 +136,12 @@ test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
     await expect(page.getByRole("heading", { name: "Holborn Library" })).toBeVisible();
   });
 
-  test("csv previews for assets", { tags: ["@worksonmirror"] }, async ({ page }) => {
+  test("csv previews for assets", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/media/5a7b9f8ced915d4147621960/passport-impact-indicat.csv/preview");
     await expect(page.getByRole("heading", { name: "Passport impact indicators - CSV version" })).toBeVisible();
   });
 
-  test("bank holidays", { tags: ["@worksonmirror"] }, async ({ page }) => {
+  test("bank holidays", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/bank-holidays");
     await expect(page.getByRole("heading", { name: "UK bank holidays" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "The next bank holiday in England and Wales" })).toBeVisible();
@@ -151,7 +151,7 @@ test.describe("Frontend", { tags: ["@app-frontend"] }, () => {
     await expect(page.getByRole("heading", { name: "The next bank holiday in Northern Ireland" })).toBeVisible();
   });
 
-  test("welsh translated bank holidays", { tags: ["@worksonmirror"] }, async ({ page }) => {
+  test("welsh translated bank holidays", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/gwyliau-banc");
     await expect(page.getByRole("heading", { name: "Gwyliau banc y DU" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Yr ŵyl banc nesaf yng Nghymru a Lloegr yw" })).toBeVisible();
