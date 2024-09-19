@@ -68,7 +68,7 @@ export default defineConfig({
         },
       },
       grep: /@worksonmirror/,
-    }
+    },
     /*
     {
       name: "cloudfront",
