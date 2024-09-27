@@ -10,7 +10,7 @@
   "devDependencies": {
     "@eslint/js": "^9.10.0",
     "@playwright/test": "^1.47.1",
-    "@types/node": "^22.5.5",
+    "@types/node": "^22.7.3",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-playwright": "^1.6.2",
