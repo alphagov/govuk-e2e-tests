@@ -2,7 +2,101 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl, waitForUrlToBeAvailable } from "../lib/utils";
 
-test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@integration"] }, () => {
+test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@integration", "@local"] }, () => {
+  test.use({ baseURL: `${publishingAppUrl("whitehall-admin")}/content-block-manager/` });
+
+  test("Can create an object", async ({ page }) => {
+    await test.step("Logging in", async () => {
+      await page.goto("./");
+      await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+    });
+
+    const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
+
+    await page.goto("./");
+    await page.getByRole("button", { text: "Create new object" }).click();
+    await page.getByLabel("Email address").click();
+    await page.getByRole("button", { text: "Save and continute" }).click();
+
+    await page.getByLabel("Title").fill(title);
+    await page.getByLabel("Email address").fill(`foo${new Date().getTime()}@example.com`);
+
+    await page.getByRole("combobox").click();
+    await page.getByRole("option", { name: "HM Revenue & Customs (HMRC)" }).click();
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await page.getByRole("button", { name: "Accept and publish" }).click();
+
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is available for use");
+  });
+
+  test("Can edit an object", async ({ page }) => {
+    await test.step("Logging in", async () => {
+      await page.goto("./");
+      await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+    });
+
+    const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
+
+    await page.goto("./");
+    const block_count = await page.getByRole("link", { name: "View/edit" }).count();
+    await page
+      .getByRole("link", { name: "View/edit" })
+      .nth(block_count - 1)
+      .click();
+    await page.getByRole("link", { name: "Change" }).nth(1).click();
+
+    await page.getByLabel("Title").fill(title);
+    await page.getByLabel("Email address").fill(`foo${new Date().getTime()}@example.com`);
+
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Where the change will appear");
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("When do you want to publish the change?");
+    await page.getByLabel("Publish the change now").check();
+    await page.getByRole("button", { name: "Accept and publish" }).click();
+
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is available for use");
+  });
+
+  test("Can schedule an object", async ({ page }) => {
+    await test.step("Logging in", async () => {
+      await page.goto("./");
+      await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+    });
+
+    const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
+
+    await page.goto("./");
+    const block_count = await page.getByRole("link", { name: "View/edit" }).count();
+    await page
+      .getByRole("link", { name: "View/edit" })
+      .nth(block_count - 1)
+      .click();
+    await page.getByRole("link", { name: "Change" }).nth(1).click();
+
+    await page.getByLabel("Title").fill(title);
+    await page.getByLabel("Email address").fill(`foo${new Date().getTime()}@example.com`);
+
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Where the change will appear");
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("When do you want to publish the change?");
+    await page.getByLabel("Schedule the change for the future").check();
+    await page.getByLabel("Day").fill("01");
+    await page.getByLabel("Month").fill("02");
+    await page.getByLabel("Year").fill("2025");
+    await page.getByLabel("Hour").selectOption("00");
+    await page.getByLabel("Minute").selectOption("00");
+    await page.getByRole("button", { name: "Accept and publish" }).click();
+
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is scheduled for change");
+  });
+});
+
+test.describe("Content Blocks in Whitehall", { tag: ["@app-content-object-store", "@integration"] }, () => {
   test.use({ baseURL: `${publishingAppUrl("whitehall-admin")}/content-block-manager/` });
 
   test("Can create and embed an object", async ({ page }) => {
@@ -24,11 +118,13 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
       await page.getByLabel("Email address").fill(`foo${new Date().getTime()}@example.com`);
 
       await page.getByRole("combobox").click();
-      await page.getByRole("option", { name: "Academy for Social Justice" }).click();
+      await page.getByRole("option", { name: "HM Revenue & Customs (HMRC)" }).click();
       await page.getByRole("button", { name: "Save and continue" }).click();
       await page.getByRole("button", { name: "Accept and publish" }).click();
 
-      await expect(page.getByRole("alert", { text: "Email address created" })).toBeVisible();
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is available for use");
+
+      await page.getByRole("button", { name: "View content block" }).click();
 
       return title;
     });
@@ -69,7 +165,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
         .locator('[id="taxonomy_tag_form\\[taxons\\]"]')
         .getByRole("list")
         .locator("div")
-        .filter({ hasText: "Brexit" })
+        .filter({ hasText: "Test taxon" })
         .click();
       await page.getByRole("button", { name: "Save" }).click();
       await page.getByRole("button", { name: "Force publish" }).click();
