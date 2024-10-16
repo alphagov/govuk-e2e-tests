@@ -38,7 +38,7 @@ test.describe("Licensing admin", () => {
       await page.goto("/");
       await page.getByRole("button", { name: "Login" }).click();
 
-      await expect(page.getByLabel("Filter by keyword in")).toBeVisible();
+      await expect(page.getByRole("link", { name: "Applications" })).toBeVisible();
     }
   );
 });
