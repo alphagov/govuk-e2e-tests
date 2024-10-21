@@ -86,7 +86,7 @@ test.describe("CDN", { tag: ["@domain-www"] }, () => {
     expect(response.headers()["location"]).toBe(expectedURL);
   });
 
-  test("redirect service domain to www domain", { tag: ["@production"] }, async ({ page }) => {
+  test("redirect service domain to www domain", { tag: ["@not-staging", "@not-integration"] }, async ({ page }) => {
     const response = await page.request.get("https://service.gov.uk", { maxRedirects: 0 });
     expect(response.status()).toBe(302);
     expect(response.headers()["location"]).toBe("https://www.gov.uk");
