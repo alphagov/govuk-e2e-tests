@@ -57,23 +57,33 @@ test.describe("CDN", { tag: ["@domain-www"] }, () => {
     expect(parseInt(response.headers()["x-cache-hits"])).toBeGreaterThan(0);
   });
 
-  test("https upgrade for apex domain", { tag: ["@production"] }, async ({ page }) => {
-    const response = await page.request.get("http://gov.uk", { maxRedirects: 0 });
+  test("https upgrade for apex domain", async ({ page }) => {
+    const url = `http://${process.env.PUBLIC_DOMAIN.replace("www.", "")}/`;
+    const expectedURL = url.replace("http://", "https://");
+
+    const response = await page.request.get(url, { maxRedirects: 0 });
     expect(response.status()).toBe(301);
-    expect(response.headers()["location"]).toBe("https://gov.uk/");
+    expect(response.headers()["location"]).toBe(expectedURL);
   });
 
-  test("redirect apex domain to www domain", { tag: ["@production"] }, async ({ page }) => {
-    const response = await page.request.get("https://gov.uk", { maxRedirects: 0 });
+  test("redirect apex domain to www domain", async ({ page }) => {
+    const expectedURL = `https://${process.env.PUBLIC_DOMAIN}/`;
+    const url = expectedURL.replace("www.", "");
+
+    const response = await page.request.get(url, { maxRedirects: 0 });
     expect(response.status()).toBe(301);
-    expect(response.headers()["location"]).toBe("https://www.gov.uk/");
+    expect(response.headers()["location"]).toBe(expectedURL);
     expect(response.headers()["strict-transport-security"]).toBe("max-age=63072000; preload");
   });
 
-  test("https upgrade for www domain", { tag: ["@production"] }, async ({ page }) => {
-    const response = await page.request.get("http://www.gov.uk", { maxRedirects: 0 });
+  test("https upgrade for www domain", async ({ page }) => {
+    const url = `http://${process.env.PUBLIC_DOMAIN}/`;
+    const expectedURL = url.replace("http://", "https://");
+    console.log(url, expectedURL);
+
+    const response = await page.request.get(url, { maxRedirects: 0 });
     expect(response.status()).toBe(301);
-    expect(response.headers()["location"]).toBe("https://www.gov.uk/");
+    expect(response.headers()["location"]).toBe(expectedURL);
   });
 
   test("redirect service domain to www domain", { tag: ["@production"] }, async ({ page }) => {
