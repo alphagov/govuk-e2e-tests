@@ -15,9 +15,9 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
 
     await page.goto("./");
-    await page.getByRole("button", { text: "Create new object" }).click();
+    await page.getByRole("button", { name: "Create new object" }).click();
     await page.getByLabel("Email address").click();
-    await page.getByRole("button", { text: "Save and continute" }).click();
+    await page.getByRole("button", { name: "Save and continue" }).click();
 
     await page.getByLabel("Title").fill(title);
     await page.getByLabel("Email address").fill(`foo${new Date().getTime()}@example.com`);
@@ -93,6 +93,21 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     await page.getByRole("button", { name: "Accept and publish" }).click();
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is scheduled for change");
+  });
+
+  test("Can search for an object", async ({ page }) => {
+    await test.step("Logging in", async () => {
+      await page.goto("./");
+      await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+    });
+
+    await page.goto("./");
+
+    await page.getByLabel("Title").fill("E2E Test");
+    await page.getByRole("button", { name: "View results" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("All content blocks");
+    await expect(page.getByRole("heading", { level: 2 }).nth(1)).toHaveText(/E2E TEST/);
   });
 });
 
