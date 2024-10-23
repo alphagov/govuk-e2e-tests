@@ -8,6 +8,12 @@ on:
   pull_request:
 
 jobs:
+  codeql-sast:
+    name: CodeQL SAST scan
+    uses: alphagov/govuk-infrastructure/.github/workflows/codeql-analysis.yml@main
+    permissions:
+      security-events: write
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
