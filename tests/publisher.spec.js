@@ -11,10 +11,9 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
     await expect(page.locator("#publication-list-container")).toBeVisible();
   });
 
-  /* This mutates server side state
   test(
-    "should see that the edition has been deleted",
-    { tag: ["@app-publisher", "@app-publishing-api", "@notproduction"] },
+    "Can add and delete an artefact in publisher",
+    { tag: ["@app-publisher", "@app-publishing-api", "@not-production"] },
     async ({ page }) => {
       // Go to the "publisher" landing page
       await page.goto("/");
@@ -35,5 +34,4 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
       await expect(page.getByText("Edition deleted")).toBeVisible();
     }
   );
-  */
 });
