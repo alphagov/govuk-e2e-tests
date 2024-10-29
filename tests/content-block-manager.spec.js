@@ -104,10 +104,20 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
 
     await page.goto("./");
 
-    await page.getByLabel("Title").fill("E2E Test");
+    await page.getByLabel("Keyword").fill("E2E Test");
+    await page.getByRole("checkbox", { name: "Email address" }).check();
+    await page.getByRole("checkbox", { name: "Postal address" }).check();
+    await page.getByRole("combobox").click();
+    await page.getByRole("option", { name: "HM Revenue & Customs (HMRC)" }).click();
+
     await page.getByRole("button", { name: "View results" }).click();
+
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("All content blocks");
     await expect(page.getByRole("heading", { level: 2 }).nth(1)).toHaveText(/E2E TEST/);
+    await expect(page.getByLabel("Keyword")).toHaveValue("E2E Test");
+    await expect(page.locator("#lead_organisation")).toHaveValue("1");
+    await expect(page.getByRole("checkbox", { name: "Email address" })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: "Postal address" })).toBeChecked();
   });
 });
 
