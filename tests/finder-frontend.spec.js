@@ -1,7 +1,10 @@
 import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
+import { trackBrowserErrors } from "../lib/track-browser-errors";
 
 test.describe("Finder frontend", { tag: ["@app-finder-frontend"] }, () => {
+  trackBrowserErrors(test);
+
   test("Can search for ministers and senior officials", async ({ page }) => {
     await page.goto("/government/people");
     await expect(page.getByRole("heading", { name: "All ministers and senior officials on GOV.UK" })).toBeVisible();
