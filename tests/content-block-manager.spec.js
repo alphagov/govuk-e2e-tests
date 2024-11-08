@@ -24,10 +24,17 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
 
     await page.getByRole("combobox").click();
     await page.getByRole("option", { name: "HM Revenue & Customs (HMRC)" }).click();
+
+    await page.getByLabel("Instructions to publishers").fill("some instructions");
+
     await page.getByRole("button", { name: "Save and continue" }).click();
     await page.getByRole("button", { name: "Accept and publish" }).click();
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is available for use");
+    await page.getByRole("button", { name: "View content block" }).click();
+
+    await expect(page.getByText("Some instructions")).toBeVisible();
+    await expect(page.getByText(title)).toBeVisible();
   });
 
   test("Can edit an object", async ({ page }) => {
@@ -49,6 +56,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
 
     await page.getByLabel("Title").fill(title);
     await page.getByLabel("Email address").fill(`foo${new Date().getTime()}@example.com`);
+    await page.getByLabel("Instructions to publishers").fill("new instructions");
 
     await page.getByRole("button", { name: "Save and continue" }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Where the change will appear");
@@ -58,6 +66,10 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     await page.getByRole("button", { name: "Accept and publish" }).click();
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your content block is available for use");
+    await page.getByRole("button", { name: "View content block" }).click();
+
+    await expect(page.getByText("New instructions")).toBeVisible();
+    await expect(page.getByText(title)).toBeVisible();
   });
 
   test("Can schedule an object", async ({ page }) => {
