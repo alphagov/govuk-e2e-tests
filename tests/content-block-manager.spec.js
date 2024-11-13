@@ -9,7 +9,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     await test.step("Logging in", async () => {
       await page.goto("./");
       await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Content Block Manager" })).toBeVisible();
     });
 
     const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
@@ -41,7 +41,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     await test.step("Logging in", async () => {
       await page.goto("./");
       await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Content Block Manager" })).toBeVisible();
     });
 
     const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
@@ -76,7 +76,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     await test.step("Logging in", async () => {
       await page.goto("./");
       await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Content Block Manager" })).toBeVisible();
     });
 
     const title = `E2E TEST EMAIL - ${new Date().getTime()}`;
@@ -111,7 +111,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
     await test.step("Logging in", async () => {
       await page.goto("./");
       await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Content Block Manager" })).toBeVisible();
     });
 
     await page.goto("./");
@@ -124,7 +124,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store", "@in
 
     await page.getByRole("button", { name: "View results" }).click();
 
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("All content blocks");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Content Block Manager");
     await expect(page.getByRole("heading", { level: 2 }).nth(1)).toHaveText(/E2E TEST/);
     await expect(page.getByLabel("Keyword")).toHaveValue("E2E Test");
     await expect(page.locator("#lead_organisation")).toHaveValue("1");
@@ -140,7 +140,7 @@ test.describe("Content Blocks in Whitehall", { tag: ["@app-content-object-store"
     await test.step("Logging in", async () => {
       await page.goto("./");
       await expect(page.getByRole("banner", { text: "Content Block Manager" })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "All content blocks" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Content Block Manager" })).toBeVisible();
     });
 
     const title = await test.step("Can create an object", async () => {
