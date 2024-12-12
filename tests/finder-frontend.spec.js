@@ -22,7 +22,7 @@ test.describe("Finder frontend", { tag: ["@app-finder-frontend"] }, () => {
   test("Can use site search and receive results", async ({ page }) => {
     await page.goto("/");
     const searchBox = page.getByRole("search");
-    await searchBox.getByRole("searchbox", { name: "Search" }).fill("Universal Credit");
+    await searchBox.getByLabel("Search").fill("Universal Credit");
     await searchBox.getByRole("button", { name: "Search" }).click();
     await expect(page.getByRole("link", { name: "Sign in to your Universal Credit account" })).toBeVisible();
   });
