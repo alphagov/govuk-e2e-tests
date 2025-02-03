@@ -19,12 +19,6 @@ test.describe("Government Frontend", { tag: ["@app-government-frontend"] }, () =
     await expect(page.getByText("How often do you want to get emails?")).toBeVisible();
   });
 
-  test("Check the frontend can talk to Search API", { tag: ["@worksonmirror"] }, async ({ page }) => {
-    await page.goto("/government/get-involved");
-    await expect(page.getByRole("heading", { name: "Recently opened" })).toBeVisible();
-    await expect(page.locator(".get-involved > div").nth(3).locator(".gem-c-document-list__item-title")).toHaveCount(3);
-  });
-
   test("Check a travel advice country page loads", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/foreign-travel-advice/luxembourg");
     await expect(page.getByRole("heading", { name: "Luxembourg" })).toBeVisible();

@@ -160,4 +160,10 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await page.getByRole("tab", { name: "Gogledd Iwerddon" }).click();
     await expect(page.getByRole("heading", { name: "Yr ŵyl banc nesaf yng Ngogledd Iwerddon yw" })).toBeVisible();
   });
+
+  test("Check the frontend can talk to Search API", { tag: ["@worksonmirror"] }, async ({ page }) => {
+    await page.goto("/government/get-involved");
+    await expect(page.getByRole("heading", { name: "Recently opened" })).toBeVisible();
+    await expect(page.locator("main > div").nth(3).locator(".gem-c-document-list__item-title")).toHaveCount(3);
+  });
 });
