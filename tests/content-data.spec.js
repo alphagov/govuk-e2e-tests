@@ -21,6 +21,6 @@ test.describe("Content Data", { tag: ["@app-content-data"] }, () => {
       .filter({ hasText: "Unique page views" })
       .locator(".app-c-glance-metric__figure")
       .innerText();
-    await expect(parseInt(pageViews)).toBeGreaterThan(0);
+    expect(parseInt(pageViews)).toBeGreaterThan(0);
   });
 });
