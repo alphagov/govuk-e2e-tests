@@ -19,6 +19,6 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "fast-xml-parser": "^5.0.7"
+    "fast-xml-parser": "^5.0.8"
   }
 }
