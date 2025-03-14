@@ -5,11 +5,7 @@ test.describe("Government Frontend", { tag: ["@app-government-frontend"] }, () =
   test("Check the frontend can talk to Content Store", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/government/get-involved");
     await expect(page.getByRole("heading", { name: "Get involved" })).toBeVisible();
-    await expect(
-      page.getByText(
-        "Find out how you can engage with government directly, and take part locally, nationally or internationally."
-      )
-    ).toBeVisible();
+    await expect(page.getByText("Find out how to get involved with the work of the government.")).toBeVisible();
   });
 
   test("Check the frontend can talk to Email Alert API", { tag: ["@app-email-alert-frontend"] }, async ({ page }) => {
