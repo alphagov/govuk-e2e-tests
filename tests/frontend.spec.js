@@ -88,6 +88,19 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("link", { name: "Zimbabwe" })).toBeHidden();
   });
 
+  test("Check a travel advice country page loads", { tag: ["@worksonmirror"] }, async ({ page }) => {
+    await page.goto("/foreign-travel-advice/luxembourg");
+    await expect(page.getByRole("heading", { name: "Luxembourg" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Warnings and insurance" })).toBeVisible();
+  });
+
+  test("Check links to Email Alert Frontend work", { tag: ["@app-email-alert-frontend"] }, async ({ page }) => {
+    await page.goto("/foreign-travel-advice/turkey");
+    await page.getByRole("link", { name: "Get email alerts" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
+    await expect(page.getByText("How often do you want to get emails?")).toBeVisible();
+  });
+
   test("signin", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/sign-in");
     await expect(page.getByRole("heading", { name: "Sign in to a service" })).toBeVisible();
