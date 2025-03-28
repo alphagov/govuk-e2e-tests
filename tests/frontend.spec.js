@@ -179,4 +179,9 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("heading", { name: "Recently opened" })).toBeVisible();
     await expect(page.locator("main > div").nth(3).locator(".gem-c-document-list__item-title")).toHaveCount(3);
   });
+
+  test("Check that Service Manuals load", { tag: ["@worksonmirror"] }, async ({ page }) => {
+    await page.goto("/service-manual");
+    await expect(page.getByRole("heading", { name: "Service Manual" })).toBeVisible();
+  });
 });
