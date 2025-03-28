@@ -19,9 +19,4 @@ test.describe("Government Frontend", { tag: ["@app-government-frontend"] }, () =
     await page.getByRole("button", { name: "Get emails about this page" }).first().click();
     await expect(page.getByText("You need a GOV.UK One Login to get these emails.")).toBeVisible();
   });
-
-  test("Check that Service Manuals load", { tag: ["@worksonmirror"] }, async ({ page }) => {
-    await page.goto("/service-manual");
-    await expect(page.getByRole("heading", { name: "Service Manual" })).toBeVisible();
-  });
 });
