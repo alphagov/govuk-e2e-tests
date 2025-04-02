@@ -2,6 +2,8 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl, waitForUrlToBeAvailable } from "../lib/utils";
 
+test.describe.configure({ mode: "serial" });
+
 test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, () => {
   let embedCode;
   let value;
@@ -10,7 +12,8 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, (
   const whitehallPath = "/government/admin/news/1658299";
   const mainstreamPath = "/editions/663e33d76187a0001afaf022";
 
-  test.beforeAll(async ({ page }) => {
+  test.beforeAll(async ({ browser }) => {
+    const page = await browser.newPage();
     await page.goto(contentBlockPath);
 
     const row = page.getByTestId("rate_1_amount");
@@ -64,7 +67,8 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, (
   test.describe("When content block changes", () => {
     let newValue;
 
-    test.beforeAll(async ({ page }) => {
+    test.beforeAll(async ({ browser }) => {
+      const page = await browser.newPage();
       // Set a new random value between £100 and £200
       newValue = `£${(Math.random() * (100.0 - 200.0) + 200.0).toFixed(2)}`;
       await page.goto(contentBlockPath);
