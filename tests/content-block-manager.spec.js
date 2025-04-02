@@ -2,6 +2,8 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl, waitForUrlToBeAvailable } from "../lib/utils";
 
+test.describe.configure({ mode: "serial" });
+
 test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, () => {
   let embedCode;
   let value;
