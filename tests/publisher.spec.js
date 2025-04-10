@@ -19,12 +19,13 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
       await page.goto("/");
 
       // Add an artefact
+      const title = `Smokey Guide ${crypto.randomUUID()}`;
       await page.getByRole("link", { name: "Add artefact" }).click();
-      await page.getByLabel("Title").fill("Smokey Guide");
-      await page.getByLabel("Slug").fill("smokey-guide");
+      await page.getByLabel("Title").fill(title);
+      await page.getByLabel("Slug").fill(title.toLowerCase().replace(" ", "-"));
       await page.getByLabel("Format").selectOption("Guide");
       await page.getByRole("button", { name: "Save and go to item" }).click();
-      await expect(page.getByRole("heading", { name: "Smokey Guide" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: title })).toBeVisible();
 
       // Delete the artefact
       await page.getByRole("tab", { name: "Admin" }).click();
