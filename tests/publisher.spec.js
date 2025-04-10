@@ -23,7 +23,7 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
       const title = `Smokey Guide ${crypto.randomUUID()}`;
       await page.getByRole("link", { name: "Add artefact" }).click();
       await page.getByLabel("Title").fill(title);
-      await page.getByLabel("Slug").fill(title.toLowerCase().replace(" ", "-"));
+      await page.getByLabel("Slug").fill(title.toLowerCase().replaceAll(" ", "-"));
       await page.getByLabel("Format").selectOption("Guide");
       await page.getByRole("button", { name: "Save and go to item" }).click();
       await expect(page.getByRole("heading", { name: title })).toBeVisible();
