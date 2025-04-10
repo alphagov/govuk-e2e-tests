@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl } from "../lib/utils";
