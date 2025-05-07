@@ -23,7 +23,7 @@ test.describe("Licensing", () => {
 
     await expect(page.getByRole("heading", { name: "Pay the licence fee" })).toBeVisible();
     await page.getByRole("link", { name: "Continue to WorldPay website" }).click();
-    await expect(page).toHaveURL(/.worldpay.com/);
+    await expect(page).toHaveURL(/\.worldpay\.com/);
   });
 });
 
