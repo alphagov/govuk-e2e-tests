@@ -5,7 +5,9 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
   test("homepage", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Welcome to GOV.UK/);
-    await expect(page.getByText("The best place to find government services and information")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "The best place to find government services and information" })
+    ).toBeVisible();
   });
 
   test("help page", { tag: ["@worksonmirror"] }, async ({ page }) => {
