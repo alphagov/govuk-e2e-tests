@@ -101,6 +101,12 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByText("How often do you want to get emails?")).toBeVisible();
   });
 
+  test("Check links to Get emails about this page", { tag: ["@app-email-alert-frontend"] }, async ({ page }) => {
+    await page.goto("/guidance/waste-exemption-nwfd-2-temporary-storage-at-the-place-of-production--2");
+    await page.getByRole("button", { name: "Get emails about this page" }).first().click();
+    await expect(page.getByText("You need a GOV.UK One Login to get these emails.")).toBeVisible();
+  });
+
   test("signin", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/sign-in");
     await expect(page.getByRole("heading", { name: "Sign in to a service" })).toBeVisible();
