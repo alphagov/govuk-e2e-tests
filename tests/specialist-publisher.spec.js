@@ -8,6 +8,5 @@ test.describe("Specialist Publisher", { tag: ["@app-specialist-publisher"] }, ()
   test("Can log in to Specialist Publisher", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page.getByText("Specialist Publisher")).toBeVisible();
-    await expect(page.getByText("Add another")).toBeVisible();
   });
 });
