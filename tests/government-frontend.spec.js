@@ -15,7 +15,7 @@ test.describe("Government Frontend", { tag: ["@app-government-frontend"] }, () =
   });
 
   test("Check links to Email Alert Frontend work", { tag: ["@app-email-alert-frontend"] }, async ({ page }) => {
-    await page.goto("/guidance/waste-exemption-nwfd-2-temporary-storage-at-the-place-of-production--2");
+    await page.goto("/government/publications/budget-2016-documents");
     await page.getByRole("button", { name: "Get emails about this page" }).first().click();
     await expect(page.getByText("You need a GOV.UK One Login to get these emails.")).toBeVisible();
   });
