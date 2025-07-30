@@ -8,7 +8,7 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
 
   test("Can log in to Publisher", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: "Publications" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Publications" })).toBeVisible();
     await expect(page.locator("#publication-list-container")).toBeVisible();
   });
 
