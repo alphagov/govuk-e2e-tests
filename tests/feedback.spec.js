@@ -18,4 +18,10 @@ test.describe("Feedback", { tag: ["@app-feedback"] }, () => {
     const screenshot = await page.locator(".gem-c-layout-super-navigation-header").screenshot();
     expect(screenshot).toMatchSnapshot("expected-header.png", { maxDiffPixels: 100 });
   });
+
+  test("ensure the footer renders correctly", async ({ page }) => {
+    await page.goto("/contact/govuk");
+    const screenshot = await page.locator(".gem-c-layout-footer").screenshot();
+    expect(screenshot).toMatchSnapshot("expected-footer.png", { maxDiffPixels: 100 });
+  });
 });
