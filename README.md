@@ -53,3 +53,9 @@ Replace placeholders with appropriate values.
 ```bash
 yarn playwright test
 ```
+
+## Screenshot tests
+
+By default, Playwright namespaces screenshots by operating system architecture (e.g. `-darwin.png` if running on a Mac, or `-linux.png` on Linux.) This would mean we would have to maintain multiple different screenshots. Therefore we have modified `playwright.config.js` to just maintain one version of each screenshot. Screenshot tests currently only run against Google Chrome as well (you can see this in the projects section of `playwright.config.js`). This greatly simplifies the implementation, as we only need to maintain a screenshot of the expected visual design for Chrome. Adding other browsers may be complicated, as they render our page with subtle pixel differences which causes the tests to fail. For example, the difference between our footer in Chrome and Firefox is as varied as 1500 pixels. Also, maintaining multiple browser screenshots would likely involve reenabling the operating system specific screenshots too, meaning we'd have to maintain `-darwin.png` screenshots to make tests run on local machines, and `-linux.png` screenshots to make the tests run on the server.
+
+See the Playwright docs for more information: https://playwright.dev/docs/test-snapshots
