@@ -22,7 +22,17 @@ yarn install
 yarn playwright install --with-deps chromium
 ```
 
-### Set environment variables
+### Running a simple test locally
+
+If you're adding a simple new test and just want to check that it will pass, you can do the following:
+
+1. Comment out the authentication setup steps in `tests/auth.setup.js` (lines 8-11)
+2. In the file that your test is in, comment out all the other tests so that your new ones are the only ones that will run.
+3. If your test has a relative path such as `page.goto("/contact/govuk");`, change it to absolute an absolute path, for example: `page.goto("https://www.gov.uk/contact/govuk");`
+4. Run `npx playwright test` but scope it to your test file. For example, if your tests are in `feedback.spec.js` you would run `npx playwright test tests/feedback.spec.js`
+5. If you want to test against integration, you can add the auth credentials directly in your `page.goto` statement, for example `await page.goto("https://yourusername:yourpassword@www.integration.publishing.service.gov.uk/contact/govuk");`
+
+### Setting environment variables (for running the full test suite or more complex tests)
 
 Create a `.env` file in the root of the project with the following content:
 
