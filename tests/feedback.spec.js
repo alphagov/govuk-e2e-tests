@@ -12,4 +12,16 @@ test.describe("Feedback", { tag: ["@app-feedback"] }, () => {
     await page.getByRole("button", { name: "No   this page is not useful" }).click();
     await expect(page.getByRole("link", { name: "Please fill in this survey" })).toBeVisible();
   });
+
+  test("ensure the header renders correctly", async ({ page }) => {
+    await page.goto("/contact/govuk");
+    const screenshot = await page.locator(".gem-c-layout-super-navigation-header").screenshot();
+    expect(screenshot).toMatchSnapshot("expected-header.png", { maxDiffPixels: 100 });
+  });
+
+  test("ensure the footer renders correctly", async ({ page }) => {
+    await page.goto("/contact/govuk");
+    const screenshot = await page.locator(".gem-c-layout-footer").screenshot();
+    expect(screenshot).toMatchSnapshot("expected-footer.png", { maxDiffPixels: 100 });
+  });
 });
