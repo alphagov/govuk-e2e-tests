@@ -22,7 +22,17 @@ yarn install
 yarn playwright install --with-deps chromium
 ```
 
-### Set environment variables
+### Running a simple test locally
+
+If you're adding a simple new test and just want to check that it will pass, you can do the following:
+
+1. Comment out the authentication setup steps in `tests/auth.setup.js` (lines 8-11)
+2. In the file that your test is in, comment out all the other tests so that your new ones are the only ones that will run.
+3. If your test has a relative path such as `page.goto("/contact/govuk");`, change it to absolute an absolute path, for example: `page.goto("https://www.gov.uk/contact/govuk");`
+4. Run `npx playwright test` but scope it to your test file. For example, if your tests are in `feedback.spec.js` you would run `npx playwright test tests/feedback.spec.js`
+5. If you want to test against integration, you can add the auth credentials directly in your `page.goto` statement, for example `await page.goto("https://yourusername:yourpassword@www.integration.publishing.service.gov.uk/contact/govuk");`
+
+### Setting environment variables (for running the full test suite or more complex tests)
 
 Create a `.env` file in the root of the project with the following content:
 
@@ -43,3 +53,9 @@ Replace placeholders with appropriate values.
 ```bash
 yarn playwright test
 ```
+
+## Screenshot tests
+
+By default, Playwright namespaces screenshots by operating system architecture (e.g. `-darwin.png` if running on a Mac, or `-linux.png` on Linux.) This would mean we would have to maintain multiple different screenshots. Therefore we have modified `playwright.config.js` to just maintain one version of each screenshot. Screenshot tests currently only run against Google Chrome as well (you can see this in the projects section of `playwright.config.js`). This greatly simplifies the implementation, as we only need to maintain a screenshot of the expected visual design for Chrome. Adding other browsers may be complicated, as they render our page with subtle pixel differences which causes the tests to fail. For example, the difference between our footer in Chrome and Firefox is as varied as 1500 pixels. Also, maintaining multiple browser screenshots would likely involve reenabling the operating system specific screenshots too, meaning we'd have to maintain `-darwin.png` screenshots to make tests run on local machines, and `-linux.png` screenshots to make the tests run on the server.
+
+See the Playwright docs for more information: https://playwright.dev/docs/test-snapshots
