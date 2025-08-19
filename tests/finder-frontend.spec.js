@@ -24,7 +24,7 @@ test.describe("Finder frontend", { tag: ["@app-finder-frontend"] }, () => {
     const searchBox = page.getByRole("search");
     await searchBox.getByLabel("Search").fill("Universal Credit");
     await searchBox.getByRole("button", { name: "Search" }).click();
-    await expect(page).toHaveTitle("Search GOV.UK");
+    await expect(page).toHaveTitle("Universal Credit - Search - GOV.UK");
     await expect(page.getByText("Universal Credit")).toBeVisible();
     await expect(page).toHaveCSS(".gem-c-document-list__item-metadata");
   });
