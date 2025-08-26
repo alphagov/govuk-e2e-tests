@@ -21,6 +21,7 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
   });
 
   test("cookies", async ({ page, context }) => {
+    await context.clearCookies();
     await page.goto("/help/cookies");
     await expect(page.getByRole("heading", { name: "Cookies on GOV.UK" })).toBeVisible();
     let cookies = await context.cookies();
