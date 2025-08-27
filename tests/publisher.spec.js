@@ -6,19 +6,15 @@ import { publishingAppUrl } from "../lib/utils";
 test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
   test.use({ baseURL: publishingAppUrl("publisher") });
 
-  test(
-    "Can log in to Publisher",
-    { tag: ["@app-publishing-api", "@publishing-app", "@not-integration"] },
-    async ({ page }) => {
-      await page.goto("/");
-      await expect(page.getByRole("link", { name: "Publications" })).toBeVisible();
-      await expect(page.locator("#publication-list-container")).toBeVisible();
-    }
-  );
+  test("Can log in to Publisher", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("link", { name: "Publications" })).toBeVisible();
+    await expect(page.locator("#publication-list-container")).toBeVisible();
+  });
 
   test(
     "Can add and delete an artefact in publisher",
-    { tag: ["@app-publisher", "@app-publishing-api", "@not-integration", "@not-production"] },
+    { tag: ["@app-publisher", "@app-publishing-api", "@not-production"] },
     async ({ page }) => {
       // Go to the "publisher" landing page
       await page.goto("/");
