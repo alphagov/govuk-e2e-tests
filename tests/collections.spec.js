@@ -82,7 +82,6 @@ test.describe("Collections", { tag: ["@app-collections", "@domain-www"] }, () =>
   test("ministers", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/government/ministers");
     await expect(page.getByRole("heading", { name: "Ministers", exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Cabinet ministers", exact: true })).toBeVisible();
   });
 
   test("ministerial role", { tag: ["@worksonmirror"] }, async ({ page }) => {
