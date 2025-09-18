@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { logIntoSignon, publishingAppUrl } from "../lib/utils";
 
-test.describe("Assets", { tag: ["@app-asset-manager", "@domain-assets", "@domain-www"] }, () => {
+test.describe("Whitehall Assets", { tag: ["@app-asset-manager", "@domain-assets", "@domain-www"] }, () => {
   test("whitehall assets are redirected", async ({ request }) => {
     const assetPath =
       "/government/uploads/system/uploads/attachment_data/file/618167/government_dietary_recommendations.pdf";
@@ -10,7 +10,9 @@ test.describe("Assets", { tag: ["@app-asset-manager", "@domain-assets", "@domain
     expect(response.status()).toBe(200);
     expect(response.url()).toBe(publishingAppUrl("assets") + assetPath);
   });
+});
 
+test.describe("Assets", { tag: ["@app-asset-manager", "@domain-assets"] }, () => {
   test("asset are served", async ({ request }) => {
     const response = await request.get("/media/580768d940f0b64fbe000022/Target_incomes_calculator.xls");
     expect(response.status()).toBe(200);
