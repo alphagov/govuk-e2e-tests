@@ -4,27 +4,30 @@ import { publishingAppUrl, waitForUrlToBeAvailable } from "../lib/utils";
 
 test.describe.configure({ mode: "serial" });
 
-test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, () => {
+test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, () => {
   let embedCode;
   let value;
 
-  const contentBlockPath = `${publishingAppUrl("whitehall-admin")}/content-block-manager/content-block/18`;
+  const contentBlockPath = `${publishingAppUrl("content-block-manager")}/18`;
   const whitehallPath = "/government/admin/news/1658299";
-  const mainstreamPath = "/editions/663e33d76187a0001afaf022";
+  const mainstreamPath = "/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387";
 
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
     await page.goto(contentBlockPath);
 
     const row = page.getByTestId("rate_1_amount");
-    value = await row.locator(".govuk-summary-list__value").first().textContent();
+    value = await row
+      .locator(".govuk-summary-list__value .app-c-embedded-objects-blocks-component__content")
+      .first()
+      .textContent();
     embedCode = await row.getAttribute("data-embed-code");
   });
 
   test.describe("When embedding content in Whitehall", () => {
     test.use({ baseURL: publishingAppUrl("whitehall-admin") });
 
-    test("Can embed content in Whitehall", async ({ page }) => {
+    test("Can embed content in Whitehall", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
       await page.goto(whitehallPath);
       await page.getByRole("button", { name: "Edit draft" }).click();
 
@@ -46,7 +49,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, (
   test.describe("When embedding content in Mainstream", () => {
     test.use({ baseURL: publishingAppUrl("publisher") });
 
-    test("Can embed content in Mainstream", async ({ page }) => {
+    test("Can embed content in Mainstream", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
       await page.goto(mainstreamPath);
 
       await page.getByLabel("More information").fill("");
@@ -101,7 +104,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, (
     test.describe("For Whitehall content", () => {
       test.use({ baseURL: publishingAppUrl("whitehall-admin") });
 
-      test("Whitehall value changes", async ({ page }) => {
+      test("Whitehall value changes", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
         await page.goto(whitehallPath);
 
         const url = await waitForUrlToBeAvailable(
@@ -119,7 +122,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-object-store"] }, (
     test.describe("For Mainstream content", () => {
       test.use({ baseURL: publishingAppUrl("publisher") });
 
-      test("Mainstream value changes", async ({ page }) => {
+      test("Mainstream value changes", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
         await page.goto(mainstreamPath);
 
         const url = await waitForUrlToBeAvailable(
