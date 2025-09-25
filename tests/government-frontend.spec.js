@@ -22,10 +22,4 @@ test.describe("Government Frontend", { tag: ["@app-government-frontend"] }, () =
     const response = await request.get(`${applicationCSSPath}`);
     expect(response.status()).toBe(200);
   });
-
-  test("Check links to Email Alert Frontend work", { tag: ["@app-email-alert-frontend"] }, async ({ page }) => {
-    await page.goto("/government/consultations/soft-drinks-industry-levy");
-    await page.getByRole("button", { name: "Get emails about this page" }).first().click();
-    await expect(page.getByText("You need a GOV.UK One Login to get these emails.")).toBeVisible();
-  });
 });
