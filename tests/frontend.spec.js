@@ -10,6 +10,15 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     ).toBeVisible();
   });
 
+  test("check application CSS loads", { tag: ["@worksonmirror"] }, async ({ page, request }) => {
+    await page.goto("/");
+    const applicationCSSPath = await page
+      .locator('link[rel="stylesheet"][href*="/assets/frontend/application-"]')
+      .getAttribute("href");
+    const response = await request.get(`${applicationCSSPath}`);
+    expect(response.status()).toBe(200);
+  });
+
   test("help page", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/help");
     await expect(page.getByRole("heading", { name: "Help using GOV.UK" })).toBeVisible();
