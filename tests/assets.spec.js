@@ -13,6 +13,8 @@ test.describe("Whitehall Assets", { tag: ["@app-asset-manager", "@domain-assets"
 });
 
 test.describe("Assets", { tag: ["@app-asset-manager", "@domain-assets"] }, () => {
+  test.use({ baseURL: publishingAppUrl("assets") });
+
   test("asset are served", async ({ request }) => {
     const response = await request.get("/media/580768d940f0b64fbe000022/Target_incomes_calculator.xls");
     expect(response.status()).toBe(200);
