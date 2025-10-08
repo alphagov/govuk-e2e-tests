@@ -19,6 +19,15 @@ test.describe("Finder frontend", { tag: ["@app-finder-frontend"] }, () => {
     await expect(page.getByText("How often do you want to get emails?")).toBeVisible();
   });
 
+  test("check application CSS loads", async ({ page, request }) => {
+    await page.goto("/search/research-and-statistics");
+    const applicationCSSPath = await page
+      .locator('link[rel="stylesheet"][href*="/assets/finder-frontend/application-"]')
+      .getAttribute("href");
+    const response = await request.get(`${applicationCSSPath}`);
+    expect(response.status()).toBe(200);
+  });
+
   test("Can use site search and receive results", async ({ page }) => {
     await page.goto("/");
     const searchBox = page.getByRole("search");

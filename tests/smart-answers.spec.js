@@ -16,6 +16,15 @@ test.describe("Smart Answers", { tag: ["@app-smartanswers"] }, () => {
     await expect(page.getByRole("heading", { name: /Information based on your answers/i })).toBeVisible();
   });
 
+  test("check application CSS loads", async ({ page, request }) => {
+    await page.goto("/vat-payment-deadlines");
+    const applicationCSSPath = await page
+      .locator('link[rel="stylesheet"][href*="/assets/smartanswers/application-"]')
+      .getAttribute("href");
+    const response = await request.get(`${applicationCSSPath}`);
+    expect(response.status()).toBe(200);
+  });
+
   test("Check the frontend can talk to Worldwide API", async ({ page }) => {
     await page.goto("/check-uk-visa");
     await page.getByRole("button", { name: "Start now" }).click();

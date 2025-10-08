@@ -14,6 +14,15 @@ test.describe("Government Frontend", { tag: ["@app-government-frontend"] }, () =
     ).toBeVisible();
   });
 
+  test("check application CSS loads", async ({ page, request }) => {
+    await page.goto("/government/topical-events/2014-overseas-territories-joint-ministerial-council/about");
+    const applicationCSSPath = await page
+      .locator('link[rel="stylesheet"][href*="/assets/government-frontend/application-"]')
+      .getAttribute("href");
+    const response = await request.get(`${applicationCSSPath}`);
+    expect(response.status()).toBe(200);
+  });
+
   test("Check links to Email Alert Frontend work", { tag: ["@app-email-alert-frontend"] }, async ({ page }) => {
     await page.goto("/government/consultations/soft-drinks-industry-levy");
     await page.getByRole("button", { name: "Get emails about this page" }).first().click();
