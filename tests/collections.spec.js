@@ -13,6 +13,15 @@ test.describe("Collections", { tag: ["@app-collections", "@domain-www"] }, () =>
     await expect(page.getByRole("link", { name: "Apply to become a driving instructor" })).toBeVisible();
   });
 
+  test("check application CSS loads", async ({ page, request }) => {
+    await page.goto("/browse");
+    const applicationCSSPath = await page
+      .locator('link[rel="stylesheet"][href*="/assets/collections/application-"]')
+      .getAttribute("href");
+    const response = await request.get(`${applicationCSSPath}`);
+    expect(response.status()).toBe(200);
+  });
+
   test("feeds", { tag: ["@worksonmirror"] }, async ({ request }) => {
     const response = await request.get("/government/feed");
     expect(response.status()).toBe(200);

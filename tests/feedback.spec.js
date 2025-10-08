@@ -13,6 +13,15 @@ test.describe("Feedback", { tag: ["@app-feedback"] }, () => {
     await expect(page.getByRole("link", { name: "Please fill in this survey" })).toBeVisible();
   });
 
+  test("check application CSS loads", async ({ page, request }) => {
+    await page.goto("/contact/govuk");
+    const applicationCSSPath = await page
+      .locator('link[rel="stylesheet"][href*="/assets/feedback/application-"]')
+      .getAttribute("href");
+    const response = await request.get(`${applicationCSSPath}`);
+    expect(response.status()).toBe(200);
+  });
+
   test("ensure the header renders correctly", async ({ page }) => {
     await page.goto("/contact/govuk");
     const screenshot = await page.locator(".gem-c-layout-super-navigation-header").screenshot();
