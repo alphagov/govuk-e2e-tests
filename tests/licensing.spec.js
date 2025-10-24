@@ -37,8 +37,8 @@ test.describe("Licensing admin", () => {
     async ({ page }) => {
       await page.goto("/");
       await page.getByRole("button", { name: "Login" }).click();
-
-      await expect(page.getByRole("link", { name: "Applications" })).toBeVisible();
+      (page.waitForURL(/\/gds-test\//, { timeout: 60000 }),
+        await expect(page.getByRole("link", { name: "Applications" })).toBeVisible());
     }
   );
 });
