@@ -17,9 +17,9 @@ test.describe("Content Data", { tag: ["@app-content-data"] }, () => {
     await page.getByRole("link", { name: "Government Digital Service", exact: true }).click();
     await expect(page.getByText("Page data")).toBeVisible();
     const pageViews = await page
-      .locator("div.app-c-glance-metric")
+      .locator("div.gem-c-glance-metric")
       .filter({ hasText: "Unique page views" })
-      .locator(".app-c-glance-metric__figure")
+      .locator(".gem-c-glance-metric__figure")
       .innerText();
     expect(parseInt(pageViews)).toBeGreaterThan(0);
   });
