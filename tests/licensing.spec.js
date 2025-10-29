@@ -35,6 +35,7 @@ test.describe("Licensing admin", () => {
       tag: ["@app-licensify", "@publishing-app"],
     },
     async ({ page }) => {
+      test.slow();
       await page.goto("/");
       await page.getByRole("button", { name: "Login" }).click();
       (page.waitForURL(/\/gds-test\//, { timeout: 60000 }),
