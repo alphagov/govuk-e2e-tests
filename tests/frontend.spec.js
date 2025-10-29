@@ -76,7 +76,7 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByText("Electoral Services Dudley")).toBeVisible();
   });
 
-  test("find your local council", { tag: ["@app-local-links-manager", "@app-locations-api"] }, async ({ page }) => {
+  test("find your local council", { tag: ["@app-local-links-manager", "@app-locations-api", "@not-staging"] }, async ({ page }) => {
     await page.goto("/find-local-council");
     await expect(page.getByRole("heading", { name: "Find your local council" })).toBeVisible();
     await page.getByLabel("Enter a postcode").fill("WV14 8TU");
