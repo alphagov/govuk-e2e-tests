@@ -65,7 +65,7 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("heading", { name: "GOV.UK roadmap" })).toBeVisible();
   });
 
-  test("contact electoral registration office", { tag: ["@not-production"] }, async ({ page }) => {
+  test("contact electoral registration office", async ({ page }) => {
     await page.goto("/contact-electoral-registration-office");
     await expect(page.getByRole("heading", { name: "Contact your Electoral Registration Office" })).toBeVisible();
     await page.getByLabel("Enter a postcode").fill("WV14 8TU");
@@ -76,20 +76,16 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByText("Electoral Services Dudley")).toBeVisible();
   });
 
-  test(
-    "find your local council",
-    { tag: ["@app-local-links-manager", "@app-locations-api", "@not-production"] },
-    async ({ page }) => {
-      await page.goto("/find-local-council");
-      await expect(page.getByRole("heading", { name: "Find your local council" })).toBeVisible();
-      await page.getByLabel("Enter a postcode").fill("WV14 8TU");
-      await page.getByRole("button", { name: "Find" }).click();
-      await page.getByLabel("Select an address").selectOption("3, BRIERLEY LANE, BILSTON, WV14 8TU");
-      await page.getByRole("button", { name: "Continue" }).click();
-      await expect(page.getByText("Dudley Metropolitan Borough Council", { exact: true })).toBeVisible();
-      await expect(page.getByRole("button", { name: "Go to Dudley Metropolitan" })).toBeVisible();
-    }
-  );
+  test("find your local council", { tag: ["@app-local-links-manager", "@app-locations-api"] }, async ({ page }) => {
+    await page.goto("/find-local-council");
+    await expect(page.getByRole("heading", { name: "Find your local council" })).toBeVisible();
+    await page.getByLabel("Enter a postcode").fill("WV14 8TU");
+    await page.getByRole("button", { name: "Find" }).click();
+    await page.getByLabel("Select an address").selectOption("3, BRIERLEY LANE, BILSTON, WV14 8TU");
+    await page.getByRole("button", { name: "Continue" }).click();
+    await expect(page.getByText("Dudley Metropolitan Borough Council", { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Go to Dudley Metropolitan" })).toBeVisible();
+  });
 
   test("foreign travel advice index", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/foreign-travel-advice");
@@ -126,7 +122,7 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("heading", { name: "Sign in to a service" })).toBeVisible();
   });
 
-  test("find a licence", { tag: ["@not-production"] }, async ({ page }) => {
+  test("find a licence", async ({ page }) => {
     await page.goto("/find-licences/busking-licence");
     await expect(page.getByRole("heading", { name: "Busking licence" })).toBeVisible();
     await page.getByLabel("Enter a postcode").fill("E20 2ST");
@@ -153,19 +149,15 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("button", { name: "Start now" })).toBeVisible();
   });
 
-  test(
-    "local transaction page",
-    { tag: ["@app-local-links-manager", "@app-locations-api", "@not-production"] },
-    async ({ page }) => {
-      await page.goto("/pay-council-tax");
-      await expect(page.getByRole("heading", { name: "Pay your Council Tax" })).toBeVisible();
-      await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
-      await page.getByRole("button", { name: "Find" }).click();
-      await expect(page.getByText("London Borough of Camden", { exact: true })).toBeVisible();
-    }
-  );
+  test("local transaction page", { tag: ["@app-local-links-manager", "@app-locations-api"] }, async ({ page }) => {
+    await page.goto("/pay-council-tax");
+    await expect(page.getByRole("heading", { name: "Pay your Council Tax" })).toBeVisible();
+    await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
+    await page.getByRole("button", { name: "Find" }).click();
+    await expect(page.getByText("London Borough of Camden", { exact: true })).toBeVisible();
+  });
 
-  test("place page", { tag: ["@app-places-manager", "@app-locations-api", "@not-production"] }, async ({ page }) => {
+  test("place page", { tag: ["@app-places-manager", "@app-locations-api"] }, async ({ page }) => {
     await page.goto("/ukonline-centre-internet-access-computer-training");
     await expect(page.getByRole("heading", { name: "Online Centres Network" })).toBeVisible();
     await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
