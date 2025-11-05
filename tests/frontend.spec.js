@@ -165,7 +165,7 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("heading", { name: "Holborn Library" })).toBeVisible();
   });
 
-  test("csv previews for assets", { tag: ["@worksonmirror"] }, async ({ page }) => {
+  test("csv previews for assets", async ({ page }) => {
     await page.goto("/csv-preview/5a7b9f8ced915d4147621960/passport-impact-indicat.csv");
     await expect(page.getByRole("heading", { name: "Passport impact indicators - CSV version" })).toBeVisible();
   });
