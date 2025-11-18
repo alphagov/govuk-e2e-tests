@@ -115,7 +115,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
         await expect(async () => {
           await page.goto(`${url}&cacheBust=${new Date().getTime()}`);
           await expect(page.getByText(newValue)).toBeVisible();
-        }).toPass();
+        }).toPass({ timeout: 30_000, intervals: [1_000, 2_000, 10_000] });
       });
     });
 
@@ -133,7 +133,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
         await expect(async () => {
           await page.goto(`${url}&cacheBust=${new Date().getTime()}`);
           await expect(page.getByText(newValue)).toBeVisible();
-        }).toPass();
+        }).toPass({ timeout: 30_000, intervals: [1_000, 2_000, 10_000] });
       });
     });
   });
