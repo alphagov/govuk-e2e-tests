@@ -27,7 +27,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
   test.describe("When embedding content in Whitehall", () => {
     test.use({ baseURL: publishingAppUrl("whitehall-admin") });
 
-    test("Can embed content in Whitehall", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
+    test("Can embed content in Whitehall", { tag: [] }, async ({ page }) => {
       await page.goto(whitehallPath);
       await page.getByRole("button", { name: "Edit draft" }).click();
 
@@ -49,7 +49,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
   test.describe("When embedding content in Mainstream", () => {
     test.use({ baseURL: publishingAppUrl("publisher") });
 
-    test("Can embed content in Mainstream", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
+    test("Can embed content in Mainstream", { tag: [] }, async ({ page }) => {
       await page.goto(mainstreamPath);
 
       await page.getByLabel("More information").fill("");
@@ -104,7 +104,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     test.describe("For Whitehall content", () => {
       test.use({ baseURL: publishingAppUrl("whitehall-admin") });
 
-      test("Whitehall value changes", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
+      test("Whitehall value changes", { tag: [] }, async ({ page }) => {
         await page.goto(whitehallPath);
 
         const url = await waitForUrlToBeAvailable(
@@ -122,7 +122,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     test.describe("For Mainstream content", () => {
       test.use({ baseURL: publishingAppUrl("publisher") });
 
-      test("Mainstream value changes", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
+      test("Mainstream value changes", { tag: [] }, async ({ page }) => {
         await page.goto(mainstreamPath);
 
         const url = await waitForUrlToBeAvailable(
