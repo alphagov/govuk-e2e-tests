@@ -9,7 +9,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
   let value;
 
   const contentBlockPath = `${publishingAppUrl("content-block-manager")}/18`;
-  const whitehallPath = "/government/admin/news/1658299";
+  const whitehallPath = "/government/admin/standard-editions/1658299";
   const mainstreamPath = "/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387";
 
   test.beforeAll(async ({ browser }) => {
