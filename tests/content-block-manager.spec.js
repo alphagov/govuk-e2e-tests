@@ -1,33 +1,34 @@
 import { expect } from "@playwright/test";
+
 import { test } from "../lib/cachebust-test";
-import { publishingAppUrl, waitForUrlToBeAvailable } from "../lib/utils";
+import { publishingAppUrl } from "../lib/utils";
 
 test.describe.configure({ mode: "serial" });
 
+async function verifyUpdatedRateVisible(page, url, updatedRate) {
+  await expect(async () => {
+    await page.goto(`${url}?cacheBust=${Date.now()}`);
+    await expect(page.getByText(updatedRate)).toBeVisible();
+  }, `Expected page to have value ${updatedRate}`).toPass();
+}
+
 test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, () => {
-  let embedCode;
-  let value;
-
   const contentBlockPath = `${publishingAppUrl("content-block-manager")}/18`;
-  const whitehallPath = "/government/admin/standard-editions/1658299";
-  const mainstreamPath = "/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387";
+  const whitehallPath = `${publishingAppUrl("whitehall-admin")}/government/admin/standard-editions/1658299`;
+  const mainstreamPath = `${publishingAppUrl("publisher")}/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387`;
 
-  test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
-    await page.goto(contentBlockPath);
+  test("Can embed an object", async ({ page }) => {
+    let embedCode;
+    let newValue;
 
-    const row = page.getByTestId("rate_1_amount");
-    value = await row
-      .locator(".govuk-summary-list__value .app-c-embedded-objects-blocks-component__content")
-      .first()
-      .textContent();
-    embedCode = await row.getAttribute("data-embed-code");
-  });
+    await test.step("Given I have a content block with an embed code", async () => {
+      await page.goto(contentBlockPath);
 
-  test.describe("When embedding content in Whitehall", () => {
-    test.use({ baseURL: publishingAppUrl("whitehall-admin") });
+      const row = page.getByTestId("rate_1_amount");
+      embedCode = await row.getAttribute("data-embed-code");
+    });
 
-    test("Can embed content in Whitehall", { tag: [] }, async ({ page }) => {
+    await test.step("When I embed the block in Whitehall", async () => {
       await page.goto(whitehallPath);
       await page.getByRole("button", { name: "Edit draft" }).click();
 
@@ -35,44 +36,18 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       await page.getByLabel("Body (required)").fill(embedCode);
 
       await page.getByRole("button", { name: "Save and go to document" }).click();
-
-      const url = await waitForUrlToBeAvailable(
-        page,
-        await page.getByRole("link", { name: "Preview on website" }).getAttribute("href")
-      );
-
-      await page.goto(url);
-      await expect(page.getByText(value)).toBeVisible();
     });
-  });
 
-  test.describe("When embedding content in Mainstream", () => {
-    test.use({ baseURL: publishingAppUrl("publisher") });
-
-    test("Can embed content in Mainstream", { tag: [] }, async ({ page }) => {
+    await test.step("And I embed the block in Mainstream", async () => {
       await page.goto(mainstreamPath);
 
       await page.getByLabel("More information").fill("");
       await page.getByLabel("More information").fill(embedCode);
 
       await page.getByRole("button", { name: "Save" }).click();
-
-      const url = await waitForUrlToBeAvailable(
-        page,
-        await page.getByRole("link", { name: "Preview" }).getAttribute("href")
-      );
-
-      await page.goto(url);
-      await expect(page.getByText(value)).toBeVisible();
     });
-  });
 
-  test.describe("When content block changes", () => {
-    let newValue;
-
-    test.beforeAll(async ({ browser }) => {
-      const page = await browser.newPage();
-      // Set a new random value between £100 and £200
+    await test.step("When I update the block value", async () => {
       newValue = `£${(Math.random() * (100.0 - 200.0) + 200.0).toFixed(2)}`;
       await page.goto(contentBlockPath);
 
@@ -89,8 +64,6 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
       await page.getByRole("button", { name: "Save and continue" }).click();
 
-      await page.getByRole("button", { name: "Save and continue" }).click();
-
       await page.getByLabel("No").check();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
@@ -101,40 +74,18 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       await page.getByRole("button", { name: "Publish" }).click();
     });
 
-    test.describe("For Whitehall content", () => {
-      test.use({ baseURL: publishingAppUrl("whitehall-admin") });
+    await test.step("Then I should be able to see the updated value on my Whitehall document", async () => {
+      await page.goto(whitehallPath);
+      const url = await page.getByRole("link", { name: "Preview on website" }).getAttribute("href");
 
-      test("Whitehall value changes", { tag: [] }, async ({ page }) => {
-        await page.goto(whitehallPath);
-
-        const url = await waitForUrlToBeAvailable(
-          page,
-          await page.getByRole("link", { name: "Preview on website" }).getAttribute("href")
-        );
-
-        await expect(async () => {
-          await page.goto(`${url}&cacheBust=${new Date().getTime()}`);
-          await expect(page.getByText(newValue)).toBeVisible();
-        }).toPass({ timeout: 30_000, intervals: [1_000, 2_000, 10_000] });
-      });
+      await verifyUpdatedRateVisible(page, url, newValue);
     });
 
-    test.describe("For Mainstream content", () => {
-      test.use({ baseURL: publishingAppUrl("publisher") });
+    await test.step("And I should be able to see the updated value on my Mainstream document", async () => {
+      await page.goto(mainstreamPath);
+      const url = await page.getByRole("link", { name: "Preview" }).getAttribute("href");
 
-      test("Mainstream value changes", { tag: [] }, async ({ page }) => {
-        await page.goto(mainstreamPath);
-
-        const url = await waitForUrlToBeAvailable(
-          page,
-          await page.getByRole("link", { name: "Preview" }).getAttribute("href")
-        );
-
-        await expect(async () => {
-          await page.goto(`${url}&cacheBust=${new Date().getTime()}`);
-          await expect(page.getByText(newValue)).toBeVisible();
-        }).toPass({ timeout: 30_000, intervals: [1_000, 2_000, 10_000] });
-      });
+      await verifyUpdatedRateVisible(page, url, newValue);
     });
   });
 });
