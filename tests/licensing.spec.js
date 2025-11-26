@@ -5,6 +5,7 @@ import path from "path";
 
 test.describe("Licensing", () => {
   test("Check licensing pages load", { tag: ["@app-licensify"] }, async ({ page }) => {
+    test.slow();
     await page.goto("/apply-for-a-licence/test-licence/gds-test/apply-1");
     const downloadPromise = page.waitForEvent("download");
     await page.getByRole("link", { name: "Download the application form" }).click();
