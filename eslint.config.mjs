@@ -11,6 +11,14 @@ export default [
   {
     ...playwright.configs["flat/recommended"],
     files: ["tests/**"],
+    rules: {
+      "playwright/expect-expect": [
+        "error",
+        {
+          assertFunctionNames: ["expect", "verifyUpdatedRateVisible"],
+        },
+      ],
+    },
   },
   prettierConfig,
 ];
