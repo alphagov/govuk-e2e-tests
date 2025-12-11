@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl } from "../lib/utils";
 
-test.describe("Service Manual Publisher", { tag: ["@app-service-manual-publisher"] }, () => {
+test.describe("Service Manual Publisher", { tag: ["@app-service-manual-publisher", "@not-production"] }, () => {
   test.use({ baseURL: publishingAppUrl("service-manual-publisher") });
 
   test(
