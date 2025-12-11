@@ -13,6 +13,9 @@ async function verifyUpdatedRateVisible(page, url, updatedRate) {
 }
 
 test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, () => {
+  // Double timeout to allow for occasional congestion in Publishing API queues
+  test.setTimeout(60_000);
+
   const contentBlockPath = `${publishingAppUrl("content-block-manager")}/18`;
   const whitehallPath = `${publishingAppUrl("whitehall-admin")}/government/admin/editions/1658299`;
   const mainstreamPath = `${publishingAppUrl("publisher")}/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387`;
