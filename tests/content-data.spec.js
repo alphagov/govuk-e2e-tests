@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "../lib/cachebust-test";
 import { publishingAppUrl } from "../lib/utils";
 
-test.describe("Content Data", { tag: ["@app-content-data", "@not-production"] }, () => {
+test.describe("Content Data", { tag: ["@app-content-data"] }, () => {
   test.use({ baseURL: publishingAppUrl("content-data") });
 
   test("Can log in to Content Data", { tag: ["@publishing-app"] }, async ({ page }) => {
