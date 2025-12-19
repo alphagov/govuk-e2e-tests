@@ -22,7 +22,7 @@ test.describe("Collections", { tag: ["@app-collections", "@domain-www"] }, () =>
     expect(response.status()).toBe(200);
   });
 
-  test("feeds", { tag: ["@worksonmirror"] }, async ({ request }) => {
+  test("feeds", async ({ request }) => {
     const response = await request.get("/government/feed");
     expect(response.status()).toBe(200);
     const parser = new XMLParser();
@@ -103,14 +103,14 @@ test.describe("Collections", { tag: ["@app-collections", "@domain-www"] }, () =>
     await expect(page.getByRole("heading", { name: "Coronation", exact: true })).toBeVisible();
   });
 
-  test("organisations api", { tag: ["@worksonmirror"] }, async ({ request }) => {
+  test("organisations api", async ({ request }) => {
     const response = await request.get("/api/organisations");
     expect(response.status()).toBe(200);
     expect(await response.json()).toBeTruthy();
     expect((await response.json()).results.length).toBeGreaterThan(1);
   });
 
-  test("organisation api", { tag: ["@worksonmirror"] }, async ({ request }) => {
+  test("organisation api", async ({ request }) => {
     const response = await request.get("/api/organisations/cabinet-office");
     expect(response.status()).toBe(200);
     expect(await response.json()).toBeTruthy();
