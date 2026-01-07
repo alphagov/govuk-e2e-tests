@@ -20,5 +20,9 @@
   "dependencies": {
     "dotenv": "^17.2.3",
     "fast-xml-parser": "^5.3.3"
-  }
+  },
+  "resolutions": {
+    "js-yaml": "^4.1.1"
+  },
+  "packageManager": "yarn@1.22.19"
 }
