@@ -29,8 +29,9 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
       await expect(page.getByRole("heading", { name: title })).toBeVisible();
 
       // Delete the artefact
-      await page.getByRole("tab", { name: "Admin" }).click();
-      await page.getByRole("button", { name: "Delete this edition" }).click();
+      await page.getByRole("link", { name: "Admin" }).click();
+      await page.getByRole("link", { name: "Delete edition 1" }).click();
+      await page.getByRole("button", { name: "Delete edition" }).click();
 
       // Verify the edition has been deleted
       await expect(page.getByText("Edition deleted")).toBeVisible();
