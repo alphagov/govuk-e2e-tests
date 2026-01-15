@@ -15,7 +15,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-playwright": "^2.4.0",
     "globals": "^17.0.0",
-    "prettier": "3.7.4"
+    "prettier": "3.8.0"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
