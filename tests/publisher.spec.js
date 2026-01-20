@@ -20,17 +20,18 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
       await page.goto("/");
 
       // Add an artefact
-      const title = `Smokey Guide ${crypto.randomUUID()}`;
+      const title = `Smokey Answer ${crypto.randomUUID()}`;
       await page.getByRole("link", { name: "Add artefact" }).click();
       await page.getByLabel("Title").fill(title);
       await page.getByLabel("Slug").fill(title.toLowerCase().replaceAll(" ", "-"));
-      await page.getByLabel("Format").selectOption("Guide");
+      await page.getByLabel("Format").selectOption("Answer");
       await page.getByRole("button", { name: "Save and go to item" }).click();
       await expect(page.getByRole("heading", { name: title })).toBeVisible();
 
       // Delete the artefact
-      await page.getByRole("tab", { name: "Admin" }).click();
-      await page.getByRole("button", { name: "Delete this edition" }).click();
+      await page.getByRole("link", { name: "Admin" }).click();
+      await page.getByRole("link", { name: "Delete edition 1" }).click();
+      await page.getByRole("button", { name: "Delete edition" }).click();
 
       // Verify the edition has been deleted
       await expect(page.getByText("Edition deleted")).toBeVisible();
