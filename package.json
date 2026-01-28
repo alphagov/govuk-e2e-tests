@@ -13,7 +13,7 @@
     "@types/node": "^25.0.9",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-playwright": "^2.5.0",
+    "eslint-plugin-playwright": "^2.5.1",
     "globals": "^17.1.0",
     "prettier": "3.8.1"
   },
