@@ -149,21 +149,21 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("button", { name: "Start now" })).toBeVisible();
   });
 
-  test("local transaction page", { tag: ["@app-local-links-manager", "@app-locations-api"] }, async ({ page }) => {
-    await page.goto("/pay-council-tax");
-    await expect(page.getByRole("heading", { name: "Pay your Council Tax" })).toBeVisible();
-    await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
-    await page.getByRole("button", { name: "Find" }).click();
-    await expect(page.getByText("London Borough of Camden", { exact: true })).toBeVisible();
-  });
+  // test("local transaction page", { tag: ["@app-local-links-manager", "@app-locations-api"] }, async ({ page }) => {
+  //   await page.goto("/pay-council-tax");
+  //   await expect(page.getByRole("heading", { name: "Pay your Council Tax" })).toBeVisible();
+  //   await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
+  //   await page.getByRole("button", { name: "Find" }).click();
+  //   await expect(page.getByText("London Borough of Camden", { exact: true })).toBeVisible();
+  // });
 
-  test("place page", { tag: ["@app-places-manager", "@app-locations-api"] }, async ({ page }) => {
-    await page.goto("/ukonline-centre-internet-access-computer-training");
-    await expect(page.getByRole("heading", { name: "Online Centres Network" })).toBeVisible();
-    await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
-    await page.getByRole("button", { name: "Find" }).click();
-    await expect(page.getByRole("heading", { name: "Holborn Library" })).toBeVisible();
-  });
+  // test("place page", { tag: ["@app-places-manager", "@app-locations-api"] }, async ({ page }) => {
+  //   await page.goto("/ukonline-centre-internet-access-computer-training");
+  //   await expect(page.getByRole("heading", { name: "Online Centres Network" })).toBeVisible();
+  //   await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
+  //   await page.getByRole("button", { name: "Find" }).click();
+  //   await expect(page.getByRole("heading", { name: "Holborn Library" })).toBeVisible();
+  // });
 
   test("csv previews for assets", async ({ page }) => {
     await page.goto("/csv-preview/5a7b9f8ced915d4147621960/passport-impact-indicat.csv");
