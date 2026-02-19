@@ -11,7 +11,9 @@ RUN apt-get update && \
 
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor > /usr/share/keyrings/nodesource.gpg
 
-RUN apt-get install -y --no-install-recommends nodejs npm;\
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+
+RUN apt-get install -y --no-install-recommends nodejs;\
     echo -n node version:\ ; node -v; \
     echo -n npm version:\ ; npm -v; \
     npm install -g yarn@1.22.19
