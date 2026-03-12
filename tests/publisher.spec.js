@@ -6,16 +6,7 @@ import { publishingAppUrl } from "../lib/utils";
 test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
   test.use({ baseURL: publishingAppUrl("publisher") });
 
-  test("Can log in to Publisher", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page, context }) => {
-    // TODO: Remove once Publisher changes setting these feature toggles to default: true have been deployed
-    await context.addCookies([
-      {
-        name: "design_system_edit_phase_3b",
-        value: "1",
-        url: publishingAppUrl("publisher"),
-      },
-    ]);
-
+  test("Can log in to Publisher", { tag: ["@app-publishing-api", "@publishing-app"] }, async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("link", { name: "Find content" })).toBeVisible();
     await expect(page.locator(".my-content")).toBeVisible();
@@ -24,21 +15,7 @@ test.describe("Publisher", { tag: ["@app-publisher"] }, () => {
   test(
     "Can add and delete an artefact in publisher",
     { tag: ["@app-publisher", "@app-publishing-api", "@not-production"] },
-    async ({ page, context }) => {
-      // TODO: Remove once Publisher changes setting these feature toggles to default: true have been deployed
-      await context.addCookies([
-        {
-          name: "design_system_edit_phase_3b",
-          value: "1",
-          url: publishingAppUrl("publisher"),
-        },
-        {
-          name: "design_system_edit_phase_4",
-          value: "1",
-          url: publishingAppUrl("publisher"),
-        },
-      ]);
-
+    async ({ page }) => {
       // Go to the "publisher" landing page
       await page.goto("/");
 
