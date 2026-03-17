@@ -152,7 +152,7 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
   test("local transaction page", { tag: ["@app-local-links-manager", "@app-locations-api"] }, async ({ page }) => {
     await page.goto("/pay-council-tax");
     await expect(page.getByRole("heading", { name: "Pay your Council Tax" })).toBeVisible();
-    await page.getByLabel("Enter a postcode").fill("WC2B 6NH");
+    await page.getByLabel("Enter a postcode").fill("N1C 4AG");
     await page.getByRole("button", { name: "Find" }).click();
     await expect(page.getByText("London Borough of Camden", { exact: true })).toBeVisible();
   });
