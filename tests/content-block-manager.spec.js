@@ -27,7 +27,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     await test.step("Given I have a content block with an embed code", async () => {
       await page.goto(contentBlockPath);
 
-      const row = page.getByTestId("rate_1_amount");
+      const row = await page.getByTestId("rate_1_amount");
       embedCode = await row.getAttribute("data-embed-code");
     });
 
@@ -56,23 +56,35 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
       await page.getByRole("button", { name: "Edit pension" }).click();
 
+      await expect(page.getByRole("heading", { name: "Edit pension" })).toBeVisible();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
+      await expect(page.getByRole("heading", { name: "Edit rates" })).toBeVisible();
       await page.locator('[data-test-id="embedded_rate-1"]').getByRole("link", { name: "Edit" }).click();
+
+      await expect(page.getByRole("heading", { name: "Edit rate" })).toBeVisible();
       await page.getByLabel("Amount").click();
       await page.getByLabel("Amount").fill(newValue);
       await page.getByRole("button", { name: "Save and continue" }).click();
 
+      await expect(page.getByRole("heading", { name: "Edit rates" })).toBeVisible();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
+      await expect(page.getByRole("heading", { name: "Preview pension" })).toBeVisible();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
+      await expect(page.getByRole("heading", { name: "Add an internal note" })).toBeVisible();
+      await page.getByRole("button", { name: "Save and continue" }).click();
+
+      await expect(page.getByRole("heading", { name: "Do users have to know the content has changed?" })).toBeVisible();
       await page.getByLabel("No").check();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
+      await expect(page.getByRole("heading", { name: "Select publish date" })).toBeVisible();
       await page.getByLabel("Publish the edit now").check();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
+      await expect(page.getByRole("heading", { name: "Review pension" })).toBeVisible();
       await page.getByLabel("confirm").check();
       await page.getByRole("button", { name: "Publish" }).click();
     });
