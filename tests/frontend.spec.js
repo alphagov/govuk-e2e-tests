@@ -35,28 +35,28 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await expect(page.getByRole("heading", { name: "Cookies on GOV.UK" })).toBeVisible();
     let cookies = await context.cookies();
     expect(cookies.find((c) => c.name == "cookies_policy").value).toBe(
-      '{"essential":true,"settings":false,"usage":false,"campaigns":false}'
+      '{"essential":true,"settings":false,"usage":false,"campaigns":false,"aggregate":true}'
     );
     await page.getByText("Use cookies that measure my website use", { exact: true }).click();
     await page.getByRole("button", { name: "Save changes" }).click();
     await page.reload();
     cookies = await context.cookies();
     expect(cookies.find((c) => c.name == "cookies_policy").value).toBe(
-      '{"essential":true,"settings":false,"usage":true,"campaigns":false}'
+      '{"essential":true,"settings":false,"usage":true,"campaigns":false,"aggregate":true}'
     );
     await page.getByText("Use cookies that help with communications and marketing", { exact: true }).click();
     await page.getByRole("button", { name: "Save changes" }).click();
     await page.reload();
     cookies = await context.cookies();
     expect(cookies.find((c) => c.name == "cookies_policy").value).toBe(
-      '{"essential":true,"settings":false,"usage":true,"campaigns":true}'
+      '{"essential":true,"settings":false,"usage":true,"campaigns":true,"aggregate":true}'
     );
     await page.getByText("Use cookies that remember my settings on the site", { exact: true }).click();
     await page.getByRole("button", { name: "Save changes" }).click();
     await page.reload();
     cookies = await context.cookies();
     expect(cookies.find((c) => c.name == "cookies_policy").value).toBe(
-      '{"essential":true,"settings":true,"usage":true,"campaigns":true}'
+      '{"essential":true,"settings":true,"usage":true,"campaigns":true,"aggregate":true}'
     );
   });
 
