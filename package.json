@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "dotenv": "^17.4.0",
-    "fast-xml-parser": "^5.5.10"
+    "fast-xml-parser": "^5.5.12"
   },
   "resolutions": {
     "js-yaml": "^4.1.1"
