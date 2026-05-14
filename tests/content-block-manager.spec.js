@@ -76,7 +76,9 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       await expect(page.getByRole("heading", { name: "Add an internal note" })).toBeVisible();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
-      await expect(page.getByRole("heading", { name: "Do users have to know the content has changed?" })).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Do you need to tell users the content has changed?" })
+      ).toBeVisible();
       await page.getByLabel("No").check();
       await page.getByRole("button", { name: "Save and continue" }).click();
 
