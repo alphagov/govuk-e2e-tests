@@ -1,27 +1,18 @@
 import { expect } from "@playwright/test";
-
 import { test } from "../lib/cachebust-test";
-import { publishingAppUrl } from "../lib/utils";
+import {
+  saveAndContinue,
+  verifyUpdatedRateVisible,
+  contentBlockPath,
+  mainstreamPath,
+  whitehallPath,
+} from "../lib/content-block-manager-helpers";
 
 test.describe.configure({ mode: "serial" });
-
-const saveAndContinue = (page) => page.getByRole("button", { name: "Save and continue" }).click();
-
-const verifyUpdatedRateVisible = async (page, updatedRate) =>
-  expect(async () => {
-    const url = await page.getByRole("link", { name: "Preview" }).getAttribute("href");
-
-    await page.goto(`${url}?cacheBust=${Date.now()}`);
-    await expect(page.getByText(updatedRate)).toBeVisible();
-  }, `Expected page to have value ${updatedRate}`).toPass();
 
 test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, () => {
   // Double timeout to allow for occasional congestion in Publishing API queues
   test.setTimeout(60_000);
-
-  const contentBlockPath = `${publishingAppUrl("content-block-manager")}/18`;
-  const whitehallPath = `${publishingAppUrl("whitehall-admin")}/government/admin/editions/1658299`;
-  const mainstreamPath = `${publishingAppUrl("publisher")}/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387`;
 
   test("Can embed an object", async ({ page }) => {
     const newPensionRate = `£${(Math.random() * 100 + 100).toFixed(2)}`;
