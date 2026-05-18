@@ -27,8 +27,11 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     const embedCode = await test.step("Given I have a content block with an embed code", async () => {
       await page.goto(contentBlockPath);
 
-      const row = await page.getByTestId("rate_1_amount");
-      return row.getAttribute("data-embed-code");
+      const row = page.getByTestId("rate_1_amount");
+      const code = await row.getAttribute("data-embed-code");
+
+      expect(code, "Unable to find valid embed code").not.toBeNull();
+      return code;
     });
 
     await test.step("When I embed the block in Whitehall", async () => {
