@@ -21,14 +21,13 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
   const mainstreamPath = `${publishingAppUrl("publisher")}/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387`;
 
   test("Can embed an object", async ({ page }) => {
-    let embedCode;
     let newValue;
 
-    await test.step("Given I have a content block with an embed code", async () => {
+    const embedCode = await test.step("Given I have a content block with an embed code", async () => {
       await page.goto(contentBlockPath);
 
       const row = await page.getByTestId("rate_1_amount");
-      embedCode = await row.getAttribute("data-embed-code");
+      return row.getAttribute("data-embed-code");
     });
 
     await test.step("When I embed the block in Whitehall", async () => {
