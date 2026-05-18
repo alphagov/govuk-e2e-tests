@@ -30,9 +30,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     await test.step("When I embed the block in Whitehall", async () => {
       await page.goto(whitehallPath);
       await page.getByRole("button", { name: "Edit draft" }).click();
-
       await page.getByRole("textbox", { name: "Body" }).fill(embedCode);
-
       await page.getByRole("button", { name: "Save and go to document" }).click();
     });
 
@@ -40,7 +38,6 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       await page.goto(mainstreamPath);
 
       await page.getByRole("textbox", { name: "More information" }).fill(embedCode);
-
       await page.getByRole("button", { name: "Save" }).click();
     });
 
