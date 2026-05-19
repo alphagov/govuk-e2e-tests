@@ -5,12 +5,13 @@ import { publishingAppUrl } from "../lib/utils";
 
 test.describe.configure({ mode: "serial" });
 
-async function verifyUpdatedRateVisible(page, url, updatedRate) {
-  await expect(async () => {
+const verifyUpdatedRateVisible = async (page, updatedRate) =>
+  expect(async () => {
+    const url = await page.getByRole("link", { name: "Preview" }).getAttribute("href");
+
     await page.goto(`${url}?cacheBust=${Date.now()}`);
     await expect(page.getByText(updatedRate)).toBeVisible();
   }, `Expected page to have value ${updatedRate}`).toPass();
-}
 
 test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, () => {
   // Double timeout to allow for occasional congestion in Publishing API queues
@@ -90,16 +91,12 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
     await test.step("Then I should be able to see the updated value on my Whitehall document", async () => {
       await page.goto(whitehallPath);
-      const url = await page.getByRole("link", { name: "Preview on website" }).getAttribute("href");
-
-      await verifyUpdatedRateVisible(page, url, newValue);
+      await verifyUpdatedRateVisible(page, newValue);
     });
 
     await test.step("And I should be able to see the updated value on my Mainstream document", async () => {
       await page.goto(mainstreamPath);
-      const url = await page.getByRole("link", { name: "Preview" }).getAttribute("href");
-
-      await verifyUpdatedRateVisible(page, url, newValue);
+      await verifyUpdatedRateVisible(page, newValue);
     });
   });
 });
