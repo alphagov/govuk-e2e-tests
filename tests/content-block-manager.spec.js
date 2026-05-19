@@ -7,12 +7,14 @@ import {
   mainstreamPath,
   whitehallPath,
 } from "../lib/content-block-manager-helpers";
+import { useExponentialBackoffRetries } from "../lib/utils";
 
-test.describe.configure({ mode: "serial" });
+test.describe.configure({ mode: "serial", retries: 3 });
 
 test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, () => {
   // Double timeout to allow for occasional congestion in Publishing API queues
   test.setTimeout(60_000);
+  useExponentialBackoffRetries(test);
 
   test("Can embed an object", async ({ page }) => {
     const newPensionRate = `£${(Math.random() * 100 + 100).toFixed(2)}`;
