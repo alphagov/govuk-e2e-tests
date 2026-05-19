@@ -22,7 +22,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
   const mainstreamPath = `${publishingAppUrl("publisher")}/editions/a3dc0cf7-00e4-4868-b0fd-2c33b4f47387`;
 
   test("Can embed an object", async ({ page }) => {
-    let newValue;
+    const newPensionRate = `£${(Math.random() * 100 + 100).toFixed(2)}`;
 
     const embedCode = await test.step("Given I have a content block with an embed code", async () => {
       await page.goto(contentBlockPath);
@@ -49,7 +49,6 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     });
 
     await test.step("When I update the block value", async () => {
-      newValue = `£${(Math.random() * (100.0 - 200.0) + 200.0).toFixed(2)}`;
       await page.goto(contentBlockPath);
 
       await page.getByRole("button", { name: "Edit pension" }).click();
@@ -62,7 +61,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
       await expect(page.getByRole("heading", { name: "Edit rate" })).toBeVisible();
       await page.getByLabel("Amount").click();
-      await page.getByLabel("Amount").fill(newValue);
+      await page.getByLabel("Amount").fill(newPensionRate);
       await page.getByRole("button", { name: "Save and continue" }).click();
 
       await expect(page.getByRole("heading", { name: "Edit rates" })).toBeVisible();
@@ -91,12 +90,12 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
     await test.step("Then I should be able to see the updated value on my Whitehall document", async () => {
       await page.goto(whitehallPath);
-      await verifyUpdatedRateVisible(page, newValue);
+      await verifyUpdatedRateVisible(page, newPensionRate);
     });
 
     await test.step("And I should be able to see the updated value on my Mainstream document", async () => {
       await page.goto(mainstreamPath);
-      await verifyUpdatedRateVisible(page, newValue);
+      await verifyUpdatedRateVisible(page, newPensionRate);
     });
   });
 });
