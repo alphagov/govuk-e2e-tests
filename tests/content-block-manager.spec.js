@@ -60,7 +60,6 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       await saveAndContinue(page);
 
       await page.locator('[data-test-id="embedded_rate-1"]').getByRole("link", { name: "Edit" }).click();
-      await page.getByLabel("Amount").click();
       await page.getByLabel("Amount").fill(newPensionRate);
       await saveAndContinue(page);
 
