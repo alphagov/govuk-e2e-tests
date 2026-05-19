@@ -56,25 +56,37 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
     await test.step("When I update the block value", async () => {
       await page.goto(contentBlockPath);
 
-      await page.getByRole("button", { name: "Edit pension" }).click();
-      await saveAndContinue(page);
+      await test.step("And I choose to edit the existing pension", async () => {
+        await page.getByRole("button", { name: "Edit pension" }).click();
+        await saveAndContinue(page);
+      });
 
-      await page.locator('[data-test-id="embedded_rate-1"]').getByRole("link", { name: "Edit" }).click();
-      await page.getByLabel("Amount").fill(newPensionRate);
-      await saveAndContinue(page);
+      await test.step("And I update the pension rate", async () => {
+        await page.locator('[data-test-id="embedded_rate-1"]').getByRole("link", { name: "Edit" }).click();
+        await page.getByLabel("Amount").fill(newPensionRate);
+        await saveAndContinue(page);
+      });
 
-      await saveAndContinue(page);
-      await saveAndContinue(page);
-      await saveAndContinue(page);
+      await test.step("And I continue through the workflow to publish my changes", async () => {
+        await saveAndContinue(page);
+        await saveAndContinue(page);
+        await saveAndContinue(page);
+      });
 
-      await page.getByLabel("No").check();
-      await saveAndContinue(page);
+      await test.step("And I choose not to inform users of my minor edit", async () => {
+        await page.getByLabel("No").check();
+        await saveAndContinue(page);
+      });
 
-      await page.getByLabel("Publish the edit now").check();
-      await saveAndContinue(page);
+      await test.step("And I choose for my changes to be published immediately", async () => {
+        await page.getByLabel("Publish the edit now").check();
+        await saveAndContinue(page);
+      });
 
-      await page.getByLabel("confirm").check();
-      await page.getByRole("button", { name: "Publish" }).click();
+      await test.step("And I publish the changes", async () => {
+        await page.getByLabel("confirm").check();
+        await page.getByRole("button", { name: "Publish" }).click();
+      });
     });
 
     await test.step("Then I should be able to see the updated value on my Whitehall document", async () => {
