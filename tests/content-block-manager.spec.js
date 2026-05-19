@@ -50,7 +50,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       });
 
       await test.step("And I update the pension rate", async () => {
-        await page.locator('[data-test-id="embedded_rate-1"]').getByRole("link", { name: "Edit" }).click();
+        await page.getByTestId("embedded_rate-1").getByRole("link", { name: "Edit" }).click();
         await page.getByLabel("Amount").fill(newPensionRate);
         await saveAndContinue(page);
       });
