@@ -5,6 +5,8 @@ import { publishingAppUrl } from "../lib/utils";
 
 test.describe.configure({ mode: "serial" });
 
+const saveAndContinue = (page) => page.getByRole("button", { name: "Save and continue" }).click();
+
 const verifyUpdatedRateVisible = async (page, updatedRate) =>
   expect(async () => {
     const url = await page.getByRole("link", { name: "Preview" }).getAttribute("href");
@@ -55,21 +57,22 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
       await page.goto(contentBlockPath);
 
       await page.getByRole("button", { name: "Edit pension" }).click();
-      await page.getByRole("button", { name: "Save and continue" }).click();
+      await saveAndContinue(page);
 
       await page.locator('[data-test-id="embedded_rate-1"]').getByRole("link", { name: "Edit" }).click();
       await page.getByLabel("Amount").click();
       await page.getByLabel("Amount").fill(newPensionRate);
-      await page.getByRole("button", { name: "Save and continue" }).click();
-      await page.getByRole("button", { name: "Save and continue" }).click();
-      await page.getByRole("button", { name: "Save and continue" }).click();
-      await page.getByRole("button", { name: "Save and continue" }).click();
+      await saveAndContinue(page);
+
+      await saveAndContinue(page);
+      await saveAndContinue(page);
+      await saveAndContinue(page);
 
       await page.getByLabel("No").check();
-      await page.getByRole("button", { name: "Save and continue" }).click();
+      await saveAndContinue(page);
 
       await page.getByLabel("Publish the edit now").check();
-      await page.getByRole("button", { name: "Save and continue" }).click();
+      await saveAndContinue(page);
 
       await page.getByLabel("confirm").check();
       await page.getByRole("button", { name: "Publish" }).click();
