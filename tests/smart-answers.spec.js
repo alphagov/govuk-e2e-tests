@@ -32,6 +32,8 @@ test.describe("Smart Answers", { tag: ["@app-smartanswers"] }, () => {
       .getByLabel("What’s your nationality as shown on your passport or travel document?")
       .selectOption("Australia");
     await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByText(/^No$/).check();
+    await page.getByRole("button", { name: "Continue" }).click();
     await page.getByText("Tourism or visiting family and friends").check();
     await page.getByRole("button", { name: "Continue" }).click();
     await expect(page.getByRole("heading", { name: /Information based on your answers/i })).toBeVisible();
