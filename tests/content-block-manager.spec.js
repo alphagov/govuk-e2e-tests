@@ -17,7 +17,8 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
   useExponentialBackoffRetries(test);
 
   test("Can embed an object", async ({ page }) => {
-    const newPensionRate = `£${(Math.random() * 100 + 100).toFixed(2)}`;
+    const newPensionRateWithoutPrefix = `${(Math.random() * 100 + 100).toFixed(2)}`;
+    const newPensionRateWithPrefix = `£${newPensionRateWithoutPrefix}`;
 
     const embedCode = await test.step("Given I have a content block with an embed code", async () => {
       await page.goto(contentBlockPath);
@@ -53,7 +54,7 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
       await test.step("And I update the pension rate", async () => {
         await page.getByTestId("embedded_rate-1").getByRole("link", { name: "Edit" }).click();
-        await page.getByLabel("Amount").fill(newPensionRate);
+        await page.getByLabel("Amount").fill(newPensionRateWithoutPrefix);
         await saveAndContinue(page);
       });
 
@@ -81,12 +82,12 @@ test.describe("Content Block Manager", { tag: ["@app-content-block-manager"] }, 
 
     await test.step("Then I should be able to see the updated value on my Whitehall document", async () => {
       await page.goto(whitehallPath);
-      await verifyUpdatedRateVisible(page, newPensionRate);
+      await verifyUpdatedRateVisible(page, newPensionRateWithPrefix);
     });
 
     await test.step("And I should be able to see the updated value on my Mainstream document", async () => {
       await page.goto(mainstreamPath);
-      await verifyUpdatedRateVisible(page, newPensionRate);
+      await verifyUpdatedRateVisible(page, newPensionRateWithPrefix);
     });
   });
 });
