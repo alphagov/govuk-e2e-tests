@@ -40,7 +40,6 @@ test.describe("Whitehall", { tag: ["@app-whitehall"] }, () => {
         } catch {
           console.log(`Retry ${retries + 1}/${maxRetries}: Update not found, retrying...`);
           if (retries === maxRetries - 1) {
-            // eslint-disable-line playwright/no-conditional-in-test
             throw new Error(`Updated message did not appear in preview after ${maxRetries} seconds`);
           }
         }

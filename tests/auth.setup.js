@@ -1,3 +1,4 @@
+/* eslint-disable playwright/expect-expect */
 import { test as setup } from "@playwright/test";
 import { logIntoSignon, publishingAppUrl } from "../lib/utils";
 
