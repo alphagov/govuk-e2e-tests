@@ -83,11 +83,6 @@ test.describe("Collections", { tag: ["@app-collections", "@domain-www"] }, () =>
     await expect(page.getByRole("heading", { name: "Sir Robert Walpole", exact: true })).toBeVisible();
   });
 
-  test("person", { tag: ["@worksonmirror"] }, async ({ page }) => {
-    await page.goto("/government/people/robert-walpole");
-    await expect(page.getByRole("heading", { name: "Sir Robert Walpole", exact: true })).toBeVisible();
-  });
-
   test("ministers", { tag: ["@worksonmirror"] }, async ({ page }) => {
     await page.goto("/government/ministers");
     await expect(page.getByRole("heading", { name: "Ministers", exact: true })).toBeVisible();
