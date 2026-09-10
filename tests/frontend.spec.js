@@ -201,4 +201,9 @@ test.describe("Frontend", { tag: ["@app-frontend", "@domain-www"] }, () => {
     await page.goto("/service-manual");
     await expect(page.getByRole("heading", { name: "Service Manual" })).toBeVisible();
   });
+
+  test("person page", { tag: ["@worksonmirror"] }, async ({ page }) => {
+    await page.goto("/government/people/robert-walpole");
+    await expect(page.getByRole("heading", { name: "Sir Robert Walpole", exact: true })).toBeVisible();
+  });
 });
