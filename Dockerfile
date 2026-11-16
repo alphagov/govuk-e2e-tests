@@ -1,5 +1,4 @@
-FROM --platform=$TARGETPLATFORM public.ecr.aws/lts/ubuntu:24.04_stable
-ARG TARGETARCH
+FROM public.ecr.aws/lts/ubuntu:26.04_stable
 
 ENV APP_HOME=/app \
     TZ=Europe/London
@@ -11,7 +10,7 @@ RUN apt-get update && \
 
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor > /usr/share/keyrings/nodesource.gpg
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash -
 
 RUN apt-get install -y --no-install-recommends nodejs;\
     echo -n node version:\ ; node -v; \
