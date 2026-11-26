@@ -35,11 +35,11 @@ test.describe("Collections", { tag: ["@app-collections", "@domain-www"] }, () =>
   test("organisations", async ({ page }) => {
     await page.goto("/government/organisations");
     await expect(page.getByRole("heading", { name: "Departments, agencies and public bodies" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Prime Minister's Office 10 Downing Street" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Prime Minister's Office No 10" })).toBeVisible();
     await page
       .getByRole("textbox", { label: /Search for a department, agency or public body/ })
       .pressSequentially("Cabinet Office");
-    await expect(page.getByRole("link", { name: "Prime Minister's Office 10 Downing Street" })).toBeHidden();
+    await expect(page.getByRole("link", { name: "Prime Minister's Office No 10" })).toBeHidden();
     await expect(page.getByRole("link", { name: "Cabinet Office", exact: true })).toBeVisible();
   });
 
